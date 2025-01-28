@@ -56,7 +56,7 @@ const Login = ({setUserType}) => {
                         if (memberType === 'ADMIN') { // ADMIN 타입 확인
                             navigate('/admin/dashboard');
                           } else if (memberType === 'USER') { // USER 타입 확인
-                            navigate('/main');
+                            navigate('/');
                           } else {
                             console.log('Unknown member type:', memberType);
                             setError('알 수 없는 사용자 유형입니다.');

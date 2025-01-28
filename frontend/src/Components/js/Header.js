@@ -61,7 +61,7 @@ const Test = () => {
 
   const handleLogout = () => {
     localStorage.clear(); // 모든 로컬 스토리지 항목 삭제
-    navigate('/');
+    navigate('/login');
   };
 
   useEffect(() => {
@@ -194,7 +194,7 @@ const Test = () => {
         )}
       </div>
       <div className="logo">
-        <Link to="/main"><img src={logo} alt="Logo" className="logo-image" /></Link>
+        <Link to="/"><img src={logo} alt="Logo" className="logo-image" /></Link>
       </div>
 
       <div className="search-bar">

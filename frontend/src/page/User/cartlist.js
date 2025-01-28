@@ -121,7 +121,7 @@ const CartList = () => {
   };
   return (
     <div className="cart">
-      <Link to='/main'>
+      <Link to='/'>
         <img src={logo} alt="Logo" className="cart-logo" />
       </Link>
       <div className="cart-section">

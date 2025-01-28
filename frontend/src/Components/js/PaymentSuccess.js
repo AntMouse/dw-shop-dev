@@ -17,7 +17,7 @@ const PaymentSuccess = () => {
         headers: { 'Authorization': token }
       })
         .then(response => {
-          navigate('/main');
+          navigate('/');
         })
         .catch(error => {
           console.error('Error capturing payment:', error);

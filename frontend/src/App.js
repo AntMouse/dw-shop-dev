@@ -29,12 +29,11 @@ function App() {
 
   const [userType, setUserType] = useState(null);
 
-
   return (
     <Router>
       <Routes>
-        <Route path='/' element={<Login setUserType={setUserType} />} />
-        <Route path='/main' element={<MainPage />} />
+        <Route path='/' element={<MainPage />} />
+        <Route path='/login' element={<Login setUserType={setUserType} />} />
         <Route path='/products/:categoryId' element={<SearchPage />} />
         <Route path='/product/detail/:id' element={<ProductDetailPage />} />
         <Route path='/signup' element={<SignupPage />} />
@@ -44,7 +43,7 @@ function App() {
         <Route
           path='/redirect'
           element={
-            userType === 'admin' ? <Navigate to='/admin/dashboard' /> : <Navigate to='/main' />
+            userType === 'admin' ? <Navigate to='/admin/dashboard' /> : <Navigate to='/' />
           }
         />
         <Route path='/orderlist' element={<OrderListPage />}/>

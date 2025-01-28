@@ -141,7 +141,7 @@ const PaymentRequest = () => {
       })
       .then(response => {
         console.log('Payment successful:', response.data); // 디버깅용 로그
-        navigate('/main');
+        navigate('/');
       })
       .catch(error => {
         console.error('Error capturing payment:', error);
