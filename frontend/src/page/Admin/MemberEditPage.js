@@ -1,9 +1,16 @@
+// 1. React 기본 라이브러리 (React 관련 라이브러리)
 import React, { useState, useEffect } from 'react';
+
+// 2. 외부 라이브러리
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+
+// 4. 사용자가 만든 내부 컴포넌트 & 유틸리티
 import { maskPhoneNumber } from './utils'; // utils 파일에서 maskPhoneNumber 함수를 가져옵니다.
-import './MemberEditPage.css';
 import { API_BASE_URL } from '../../config/api';
+
+// 5. CSS 또는 스타일 파일
+import './MemberEditPage.css';
 
 function MemberEditPage() {
   const { id } = useParams();

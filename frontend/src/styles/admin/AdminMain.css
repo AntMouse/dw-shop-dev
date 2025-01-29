@@ -4,9 +4,9 @@
     align-items: center;
     height: 100vh; /* 화면 전체 높이에 맞춤 */
     gap: 20px; /* 각 아이템 간의 간격 */
-  }
+}
   
-  .admin-main-item {
+.admin-main-item {
     width: 300px;
     height: 300px;
     display: flex;
@@ -20,6 +20,6 @@
     transition: transform 0.2s; /* 호버 효과를 위한 트랜지션 */
   }
   
-  .admin-main-item:hover {
+.admin-main-item:hover {
     transform: scale(1.05); /* 호버 시 확대 효과 */
-  }
+}
