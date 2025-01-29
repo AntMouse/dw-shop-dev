@@ -4,101 +4,165 @@
 │   │   │   ├── com
 │   │   │   │   ├── example
 │   │   │   │   │   ├── DWShopProject
-│   │   │   │   │   │   ├── config
-│   │   │   │   │   │   │   ├── DataInitializer.java
-│   │   │   │   │   │   │   ├── SpringSecurityConfig.java
-│   │   │   │   │   │   │   ├── WebConfig.java
-│   │   │   │   │   │   │   ├── WebMvcConfig.java
-│   │   │   │   │   │   ├── controller
-│   │   │   │   │   │   │   ├── AddressController.java
-│   │   │   │   │   │   │   ├── AOrderController.java
-│   │   │   │   │   │   │   ├── CartController.java
-│   │   │   │   │   │   │   ├── EmailController.java
-│   │   │   │   │   │   │   ├── MemberRestController.java
-│   │   │   │   │   │   │   ├── OrderController.java
-│   │   │   │   │   │   │   ├── OrderStatusController.java
-│   │   │   │   │   │   │   ├── PayPalController.java
-│   │   │   │   │   │   │   ├── ProductController.java
-│   │   │   │   │   │   │   ├── ProductTypeController.java
-│   │   │   │   │   │   │   ├── ReviewController.java
-│   │   │   │   │   │   │   ├── SaleController.java
-│   │   │   │   │   │   │   ├── SearchController.java
-│   │   │   │   │   │   ├── dao
-│   │   │   │   │   │   │   ├── AddressDto.java
-│   │   │   │   │   │   │   ├── AOrderDto.java
-│   │   │   │   │   │   │   ├── AOrderItemDto.java
-│   │   │   │   │   │   │   ├── CartDto.java
-│   │   │   │   │   │   │   ├── CartItemDto.java
-│   │   │   │   │   │   │   ├── LoginDto.java
-│   │   │   │   │   │   │   ├── MemberDto.java
-│   │   │   │   │   │   │   ├── OrderDto.java
-│   │   │   │   │   │   │   ├── OrderItemDto.java
-│   │   │   │   │   │   │   ├── OrderStatusDto.java
-│   │   │   │   │   │   │   ├── ProductDto.java
-│   │   │   │   │   │   │   ├── ReviewDto.java
-│   │   │   │   │   │   │   ├── SaleDto.java
-│   │   │   │   │   │   │   ├── SalesRequestDto.java
-│   │   │   │   │   │   │   ├── SearchDto.java
-│   │   │   │   │   │   │   ├── SearchResultDto.java
-│   │   │   │   │   │   ├── entity
-│   │   │   │   │   │   │   ├── Address.java
-│   │   │   │   │   │   │   ├── Cart.java
-│   │   │   │   │   │   │   ├── CartItem.java
-│   │   │   │   │   │   │   ├── Member.java
-│   │   │   │   │   │   │   ├── Order.java
-│   │   │   │   │   │   │   ├── OrderItem.java
-│   │   │   │   │   │   │   ├── Product.java
-│   │   │   │   │   │   │   ├── ProductTypeMgmt.java
-│   │   │   │   │   │   │   ├── Review.java
-│   │   │   │   │   │   │   ├── Sale.java
-│   │   │   │   │   │   │   ├── TemporaryOrder.java
-│   │   │   │   │   │   ├── enums
-│   │   │   │   │   │   │   ├── OrderStatus.java
-│   │   │   │   │   │   │   ├── ParentTypeEnum.java
-│   │   │   │   │   │   │   ├── ProductTypeEnum.java
-│   │   │   │   │   │   ├── exception
-│   │   │   │   │   │   │   ├── GlobalExceptionHandler.java
-│   │   │   │   │   │   │   ├── ResourceNotFoundException.java
-│   │   │   │   │   │   ├── jwt
-│   │   │   │   │   │   │   ├── JwtAuthFilter.java
-│   │   │   │   │   │   │   ├── JwtUtil.java
-│   │   │   │   │   │   ├── repository
-│   │   │   │   │   │   │   ├── AddressRepository.java
-│   │   │   │   │   │   │   ├── AOrderItemRepository.java
-│   │   │   │   │   │   │   ├── AOrderRepository.java
-│   │   │   │   │   │   │   ├── CardRepository.java
-│   │   │   │   │   │   │   ├── CartItemRepository.java
-│   │   │   │   │   │   │   ├── CartRepository.java
-│   │   │   │   │   │   │   ├── MemberRepository.java
-│   │   │   │   │   │   │   ├── OrderItemRepository.java
-│   │   │   │   │   │   │   ├── OrderRepository.java
-│   │   │   │   │   │   │   ├── ProductRepository.java
-│   │   │   │   │   │   │   ├── ProductTypeMgmtRepository.java
-│   │   │   │   │   │   │   ├── ReviewRepository.java
-│   │   │   │   │   │   │   ├── SaleRepository.java
-│   │   │   │   │   │   │   ├── TemporaryOrderRepository.java
-│   │   │   │   │   │   ├── security
-│   │   │   │   │   │   │   ├── MemberDetailsImpl.java
-│   │   │   │   │   │   │   ├── MemberDetailsServiceImpl.java
-│   │   │   │   │   │   │   ├── MemberRoleEnum.java
-│   │   │   │   │   │   ├── service
-│   │   │   │   │   │   │   ├── AddressService.java
-│   │   │   │   │   │   │   ├── AOrderService.java
-│   │   │   │   │   │   │   ├── CartService.java
-│   │   │   │   │   │   │   ├── EmailService.java
-│   │   │   │   │   │   │   ├── MemberService.java
-│   │   │   │   │   │   │   ├── OrderService.java
-│   │   │   │   │   │   │   ├── OrderStatusService.java
-│   │   │   │   │   │   │   ├── PayPalService.java
-│   │   │   │   │   │   │   ├── ProductService.java
-│   │   │   │   │   │   │   ├── ProductTypeService.java
-│   │   │   │   │   │   │   ├── ReviewService.java
-│   │   │   │   │   │   │   ├── SaleService.java
-│   │   │   │   │   │   │   ├── SearchService.java
+│   │   │   │   │   │   ├── address
+│   │   │   │   │   │   │   ├── controller
+│   │   │   │   │   │   │   │   ├── AddressRestController.java
+│   │   │   │   │   │   │   ├── dto
+│   │   │   │   │   │   │   │   ├── AddressDto.java
+│   │   │   │   │   │   │   ├── entity
+│   │   │   │   │   │   │   │   ├── Address.java
+│   │   │   │   │   │   │   ├── repository
+│   │   │   │   │   │   │   │   ├── AddressRepository.java
+│   │   │   │   │   │   │   ├── service
+│   │   │   │   │   │   │   │   ├── AddressService.java
+│   │   │   │   │   │   ├── cart
+│   │   │   │   │   │   │   ├── controller
+│   │   │   │   │   │   │   │   ├── CartRestController.java
+│   │   │   │   │   │   │   ├── dto
+│   │   │   │   │   │   │   │   ├── CartDto.java
+│   │   │   │   │   │   │   │   ├── CartItemDto.java
+│   │   │   │   │   │   │   ├── entity
+│   │   │   │   │   │   │   │   ├── Cart.java
+│   │   │   │   │   │   │   │   ├── CartItem.java
+│   │   │   │   │   │   │   ├── repository
+│   │   │   │   │   │   │   │   ├── CartItemRepository.java
+│   │   │   │   │   │   │   │   ├── CartRepository.java
+│   │   │   │   │   │   │   ├── service
+│   │   │   │   │   │   │   │   ├── CartService.java
+│   │   │   │   │   │   ├── common
+│   │   │   │   │   │   │   ├── config
+│   │   │   │   │   │   │   │   ├── DataInitializer.java
+│   │   │   │   │   │   │   │   ├── RestClientConfig.java
+│   │   │   │   │   │   │   │   ├── SpringSecurityConfig.java
+│   │   │   │   │   │   │   │   ├── WebConfig.java
+│   │   │   │   │   │   │   │   ├── WebMvcConfig.java
+│   │   │   │   │   │   │   ├── constants
+│   │   │   │   │   │   │   │   ├── ApplicationConstants.java
+│   │   │   │   │   │   │   ├── enums
+│   │   │   │   │   │   │   │   ├── MemberRoleEnum.java
+│   │   │   │   │   │   │   │   ├── OrderStatusEnum.java
+│   │   │   │   │   │   │   │   ├── ParentTypeEnum.java
+│   │   │   │   │   │   │   │   ├── ProductTypeEnum.java
+│   │   │   │   │   │   │   ├── exception
+│   │   │   │   │   │   │   │   ├── GlobalExceptionHandler.java
+│   │   │   │   │   │   │   │   ├── ResourceNotFoundException.java
+│   │   │   │   │   │   │   ├── security
+│   │   │   │   │   │   │   │   ├── jwt
+│   │   │   │   │   │   │   │   │   ├── JwtAuthFilter.java
+│   │   │   │   │   │   │   │   │   ├── JwtUtil.java
+│   │   │   │   │   │   │   │   ├── userdetails
+│   │   │   │   │   │   │   │   │   ├── MemberDetailsImpl.java
+│   │   │   │   │   │   │   │   │   ├── MemberDetailsServiceImpl.java
+│   │   │   │   │   │   │   ├── utility
+│   │   │   │   │   │   ├── email
+│   │   │   │   │   │   │   ├── controller
+│   │   │   │   │   │   │   │   ├── EmailController.java
+│   │   │   │   │   │   │   ├── dto
+│   │   │   │   │   │   │   ├── entity
+│   │   │   │   │   │   │   ├── repository
+│   │   │   │   │   │   │   ├── service
+│   │   │   │   │   │   │   │   ├── EmailService.java
+│   │   │   │   │   │   ├── login
+│   │   │   │   │   │   │   ├── controller
+│   │   │   │   │   │   │   ├── dto
+│   │   │   │   │   │   │   ├── entity
+│   │   │   │   │   │   │   ├── repository
+│   │   │   │   │   │   │   ├── service
+│   │   │   │   │   │   ├── member
+│   │   │   │   │   │   │   ├── controller
+│   │   │   │   │   │   │   │   ├── MemberRestController.java
+│   │   │   │   │   │   │   ├── dto
+│   │   │   │   │   │   │   │   ├── LoginDto.java
+│   │   │   │   │   │   │   │   ├── MemberDto.java
+│   │   │   │   │   │   │   ├── entity
+│   │   │   │   │   │   │   │   ├── Member.java
+│   │   │   │   │   │   │   ├── repository
+│   │   │   │   │   │   │   │   ├── MemberRepository.java
+│   │   │   │   │   │   │   ├── service
+│   │   │   │   │   │   │   │   ├── MemberService.java
+│   │   │   │   │   │   ├── order
+│   │   │   │   │   │   │   ├── controller
+│   │   │   │   │   │   │   │   ├── AOrderController.java
+│   │   │   │   │   │   │   │   ├── OrderRestController.java
+│   │   │   │   │   │   │   │   ├── OrderStatusController.java
+│   │   │   │   │   │   │   ├── dto
+│   │   │   │   │   │   │   │   ├── AOrderDto.java
+│   │   │   │   │   │   │   │   ├── AOrderItemDto.java
+│   │   │   │   │   │   │   │   ├── OrderDto.java
+│   │   │   │   │   │   │   │   ├── OrderItemDto.java
+│   │   │   │   │   │   │   │   ├── OrderStatusDto.java
+│   │   │   │   │   │   │   ├── entity
+│   │   │   │   │   │   │   │   ├── Order.java
+│   │   │   │   │   │   │   │   ├── OrderItem.java
+│   │   │   │   │   │   │   │   ├── TemporaryOrder.java
+│   │   │   │   │   │   │   ├── repository
+│   │   │   │   │   │   │   │   ├── AOrderItemRepository.java
+│   │   │   │   │   │   │   │   ├── AOrderRepository.java
+│   │   │   │   │   │   │   │   ├── OrderItemRepository.java
+│   │   │   │   │   │   │   │   ├── OrderRepository.java
+│   │   │   │   │   │   │   │   ├── TemporaryOrderRepository.java
+│   │   │   │   │   │   │   ├── service
+│   │   │   │   │   │   │   │   ├── AOrderService.java
+│   │   │   │   │   │   │   │   ├── OrderService.java
+│   │   │   │   │   │   │   │   ├── OrderStatusService.java
+│   │   │   │   │   │   ├── paypal
+│   │   │   │   │   │   │   ├── controller
+│   │   │   │   │   │   │   │   ├── PayPalController.java
+│   │   │   │   │   │   │   ├── dto
+│   │   │   │   │   │   │   ├── entity
+│   │   │   │   │   │   │   ├── repository
+│   │   │   │   │   │   │   ├── service
+│   │   │   │   │   │   │   │   ├── PayPalService.java
+│   │   │   │   │   │   ├── product
+│   │   │   │   │   │   │   ├── controller
+│   │   │   │   │   │   │   │   ├── ProductRestController.java
+│   │   │   │   │   │   │   │   ├── ProductTypeRestController.java
+│   │   │   │   │   │   │   ├── dto
+│   │   │   │   │   │   │   │   ├── ProductDto.java
+│   │   │   │   │   │   │   ├── entity
+│   │   │   │   │   │   │   │   ├── Product.java
+│   │   │   │   │   │   │   │   ├── ProductTypeMgmt.java
+│   │   │   │   │   │   │   ├── repository
+│   │   │   │   │   │   │   │   ├── ProductRepository.java
+│   │   │   │   │   │   │   │   ├── ProductTypeMgmtRepository.java
+│   │   │   │   │   │   │   ├── service
+│   │   │   │   │   │   │   │   ├── ProductService.java
+│   │   │   │   │   │   │   │   ├── ProductTypeService.java
+│   │   │   │   │   │   ├── review
+│   │   │   │   │   │   │   ├── controller
+│   │   │   │   │   │   │   │   ├── ReviewController.java
+│   │   │   │   │   │   │   ├── dto
+│   │   │   │   │   │   │   │   ├── ReviewDto.java
+│   │   │   │   │   │   │   ├── entity
+│   │   │   │   │   │   │   │   ├── Review.java
+│   │   │   │   │   │   │   ├── repository
+│   │   │   │   │   │   │   │   ├── ReviewRepository.java
+│   │   │   │   │   │   │   ├── service
+│   │   │   │   │   │   │   │   ├── ReviewService.java
+│   │   │   │   │   │   ├── sale
+│   │   │   │   │   │   │   ├── controller
+│   │   │   │   │   │   │   │   ├── SaleController.java
+│   │   │   │   │   │   │   ├── dto
+│   │   │   │   │   │   │   │   ├── SaleDto.java
+│   │   │   │   │   │   │   │   ├── SalesRequestDto.java
+│   │   │   │   │   │   │   ├── entity
+│   │   │   │   │   │   │   │   ├── Sale.java
+│   │   │   │   │   │   │   ├── repository
+│   │   │   │   │   │   │   │   ├── SaleRepository.java
+│   │   │   │   │   │   │   ├── service
+│   │   │   │   │   │   │   │   ├── SaleService.java
+│   │   │   │   │   │   ├── search
+│   │   │   │   │   │   │   ├── controller
+│   │   │   │   │   │   │   │   ├── SearchController.java
+│   │   │   │   │   │   │   ├── dto
+│   │   │   │   │   │   │   │   ├── SearchDto.java
+│   │   │   │   │   │   │   │   ├── SearchResultDto.java
+│   │   │   │   │   │   │   ├── entity
+│   │   │   │   │   │   │   ├── repository
+│   │   │   │   │   │   │   ├── service
+│   │   │   │   │   │   │   │   ├── SearchService.java
 │   │   │   │   │   │   ├── DWShopProject.iml
 │   │   │   │   │   │   ├── DwShopProjectApplication.java
-│   │   │   │   │   │   ├── ResourceNotFoundException.java
-│   │   │   │   │   │   ├── RestClientConfig.java
 │   │   │   │   │   │   ├── 추가한파일목록.txt
 │   │   │   │   │   │   ├── 파일구조.txt
 │   │   ├── resources
