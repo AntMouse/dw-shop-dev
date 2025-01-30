@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import '../../Components/css/member.css';
+import '../../components/css/member.css';
 import Logo from '../../assets/3.png';
 import UsernameIcon from '../../assets/name.png';
 import EmailIcon from '../../assets/mail.png';

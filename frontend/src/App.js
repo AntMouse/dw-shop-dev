@@ -16,13 +16,12 @@ import { UserDeliveryPage } from './page/User/UserDeliveryPage';
 import SignupPage from './page/User/signupPage';
 import { OrderDetailPage } from './page/User/OrderDetailPage'
 
-import AdminOrderList from './Components/admin/order/OrderListPage'
-import AdminOrderEdit from './Components/admin/order/OrderEditPage'
-import AdminMemberList from './Components/admin/member/MemberListPage'
-import AdminMemberEdit from './Components/admin/member/MemberEditPage'
-import AdminProductList from './Components/admin/product/ProductListPage'
-import AdminProductEdit from './Components/admin/product/ProductEditPage'
-
+import AdminOrderList from './components/admin/order/OrderListPage'
+import AdminOrderEdit from './components/admin/order/OrderEditPage'
+import AdminMemberList from './components/admin/member/MemberListPage'
+import AdminMemberEdit from './components/admin/member/AdminMemberEditPage'
+import AdminProductList from './components/admin/product/ProductListPage'
+import AdminProductEdit from './components/admin/product/ProductEditPage'
 import SaleList from './page/Admin/SaleList';
 
 function App() {

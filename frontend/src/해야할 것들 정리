@@ -50,6 +50,102 @@ import '../../styles/admin/AdminMain.css';
  ├── App.js
  ├── index.js
 
+
+
+ /src
+ ├── /components            # 공통 UI 컴포넌트
+ │   ├── /common            # 버튼, 모달, 입력 필드 같은 재사용 가능한 컴포넌트
+ │   │   ├── Button.js
+ │   │   ├── Modal.js
+ │   │   ├── Input.js
+ │   │   ├── LoadingSpinner.js
+ │   │   └── styles/ (공통 스타일)
+ │   │
+ │   ├── /admin             # 관리 페이지 관련 컴포넌트
+ │   │   ├── /member        # 관리자 - 회원 관리 기능 관련 컴포넌트
+ │   │   │   ├── AdminMemberForm.js  # 회원 정보 입력/수정 폼
+ │   │   │   ├── AdminMemberList.js  # 회원 목록 표시
+ │   │   │   ├── AdminMemberEditPage.js  # 회원 수정 페이지
+ │   │   │   ├── styles/   # 회원 관리 페이지 관련 스타일
+ │   │   │   │   ├── AdminMemberForm.css
+ │   │   │   │   ├── AdminMemberEditPage.css
+ │   │   │   │   ├── AdminMemberList.css
+ │   │   │
+ │   │   ├── /product       # 관리자 - 상품 관리 관련 컴포넌트
+ │   │   │   ├── AdminProductList.js
+ │   │   │   ├── AdminProductEditPage.js
+ │   │   │   ├── AdminProductForm.js
+ │   │   │   ├── styles/
+ │   │   │
+ │   │   ├── /order         # 관리자 - 주문 관리 관련 컴포넌트
+ │   │   │   ├── AdminOrderList.js
+ │   │   │   ├── AdminOrderDetail.js
+ │   │   │   ├── styles/
+ │   │   │
+ │   │   ├── /dashboard     # 관리자 대시보드
+ │   │   │   ├── AdminDashboard.js
+ │   │   │   ├── styles/
+ │   │   │
+ │   ├── /member            # 일반 회원 관련 컴포넌트
+ │   │   ├── MemberProfile.js
+ │   │   ├── MemberEditPage.js
+ │   │   ├── styles/
+ │   │
+ │   ├── /product           # 상품 관련 컴포넌트 (일반 사용자)
+ │   │   ├── ProductList.js
+ │   │   ├── ProductDetail.js
+ │   │   ├── styles/
+ │   │
+ │   ├── /order             # 주문 관련 컴포넌트 (일반 사용자)
+ │   │   ├── OrderList.js
+ │   │   ├── OrderDetail.js
+ │   │   ├── styles/
+ │   │
+ │   ├── /cart              # 장바구니 관련 컴포넌트
+ │   │   ├── Cart.js
+ │   │   ├── CartItem.js
+ │   │   ├── styles/
+ │   │
+ │   ├── /auth              # 인증 관련 컴포넌트 (로그인, 회원가입 등)
+ │   │   ├── Login.js
+ │   │   ├── Signup.js
+ │   │   ├── ForgotPassword.js
+ │   │   ├── styles/
+ │
+ ├── /pages                 # 페이지 단위 컴포넌트
+ │   ├── AdminPage.js       # 관리자 페이지 진입점
+ │   ├── MemberPage.js      # 일반 회원 페이지 진입점
+ │   ├── ProductPage.js     # 상품 페이지 진입점
+ │   ├── OrderPage.js       # 주문 페이지 진입점
+ │
+ ├── /hooks                 # 커스텀 훅
+ │   ├── useAuth.js         # 로그인 상태 관리
+ │   ├── useAdminMember.js  # 관리자가 회원을 관리하는 훅
+ │   ├── useAdminProduct.js # 관리자가 상품을 관리하는 훅
+ │   ├── useCart.js         # 장바구니 관리 훅
+ │
+ ├── /services              # API 요청 관리
+ │   ├── authService.js     # 로그인, 회원가입 API
+ │   ├── adminMemberService.js  # 관리자의 회원 관리 API
+ │   ├── adminProductService.js # 관리자의 상품 관리 API
+ │   ├── productService.js  # 일반 사용자용 상품 API
+ │   ├── orderService.js    # 주문 API
+ │
+ ├── /utils                 # 유틸리티 함수
+ │   ├── formatDate.js      # 날짜 변환 함수
+ │   ├── maskUtils.js       # 전화번호 마스킹 등
+ │
+ ├── /styles                # 전역 스타일
+ │   ├── global.css
+ │   ├── reset.css
+ │   ├── theme.css
+ │
+ ├── App.js                 # 애플리케이션 진입점
+ ├── index.js               # React DOM 렌더링
+ ├── routes.js              # 라우트 관리
+ ├── config.js              # 환경 설정 (API URL 등)
+
+
 3. 소스 파일(.js 또는 .css) 가장 위에 주석(//) 으로 폴더 경로와
 소스 파일 이름을 적어 놓자.
 

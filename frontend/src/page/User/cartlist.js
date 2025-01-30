@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import '../../Components/css/cartlist.css';
+import '../../components/css/cartlist.css';
 import logo from '../../assets/3.png';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';

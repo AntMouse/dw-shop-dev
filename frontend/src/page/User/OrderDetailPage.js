@@ -1,6 +1,6 @@
 import React from 'react'
-import Header from '../../Components/js/Header'
-import OrderDetail from '../../Components/js/Order-detail'
+import Header from '../../components/js/Header'
+import OrderDetail from '../../components/js/Order-detail'
 export const OrderDetailPage = () => {
   return (
     <div className='App'>

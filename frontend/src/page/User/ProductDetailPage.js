@@ -1,6 +1,6 @@
 import React from 'react'
-import Header from '../../Components/js/Header'
-import Detail from '../../Components/js/Detail'
+import Header from '../../components/js/Header'
+import Detail from '../../components/js/Detail'
 
 export const ProductDetailPage = () => {
   return (

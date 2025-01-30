@@ -1,7 +1,7 @@
 import React from 'react'
-import { Userinfosubmenu } from '../../Components/js/Userinfosubmenu'
-import MemberOrder from '../../Components/js/MemberOrder'
-import Header from '../../Components/js/Header'
+import { Userinfosubmenu } from '../../components/js/Userinfosubmenu'
+import MemberOrder from '../../components/js/MemberOrder'
+import Header from '../../components/js/Header'
 
 export const OrderListPage = () => {
     return (

@@ -1,8 +1,8 @@
 import React from 'react'
-import { Userinfosubmenu } from '../../Components/js/Userinfosubmenu'
-import { MyPage } from '../../Components/js/MyPage'
-import '../../Components/css/Info.css'
-import Header from '../../Components/js/Header'
+import { Userinfosubmenu } from '../../components/js/Userinfosubmenu'
+import { MyPage } from '../../components/js/MyPage'
+import '../../components/css/Info.css'
+import Header from '../../components/js/Header'
 import './UserInfo.css' 
 
 export const UserInfoPage = () => {

@@ -1,6 +1,6 @@
 import React from 'react'
-import Slide from '../../Components/js/Slide';
-import Header from '../../Components/js/Header'
+import Slide from '../../components/js/Slide';
+import Header from '../../components/js/Header'
 
 
 

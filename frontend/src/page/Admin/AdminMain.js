@@ -5,7 +5,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 // 4. 사용자가 만든 내부 컴포넌트 & 유틸리티
-import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '../../hooks/auth/useAuth';
 
 // 5. CSS 또는 스타일 파일
 import '../../styles/admin/AdminMain.css';

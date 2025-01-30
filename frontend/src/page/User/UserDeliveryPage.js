@@ -1,8 +1,8 @@
 import React from 'react'
-import Header from '../../Components/js/Header'
-import Delivery from '../../Components/js/Delivery'
-import {Userinfosubmenu} from '../../Components/js/Userinfosubmenu'
-import '../../Components/css/Deliverypage.css'
+import Header from '../../components/js/Header'
+import Delivery from '../../components/js/Delivery'
+import {Userinfosubmenu} from '../../components/js/Userinfosubmenu'
+import '../../components/css/Deliverypage.css'
 
 export const UserDeliveryPage = () => {
     return (

@@ -1,7 +1,7 @@
 import React from 'react'
-import Header from '../../Components/js/Header'
-import Goods from '../../Components/js/Goods'
-import SearchRequest from '../../Components/js/SearchRequest'
+import Header from '../../components/js/Header'
+import Goods from '../../components/js/Goods'
+import SearchRequest from '../../components/js/SearchRequest'
 
 const SearchPage2 = () => {
     return (

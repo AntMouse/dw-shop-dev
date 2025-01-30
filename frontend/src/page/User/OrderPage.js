@@ -1,6 +1,6 @@
 import React from 'react'
-import Header from '../../Components/js/Header'
-import PaymentRequest from '../../Components/js/Request'
+import Header from '../../components/js/Header'
+import PaymentRequest from '../../components/js/Request'
 
 export const OrderPage = () => {
     return (
