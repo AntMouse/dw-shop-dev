@@ -4,10 +4,10 @@
 import React from 'react';
 
 // 5. CSS 또는 스타일 파일
-import './styles/AdminMemberEditForm.css'
+import './styles/AdminMemberEditForm.scss'
 
 const AdminMemberEditForm = ({ editMemberData, handleInputChange, handleSaveClick, handleCancelClick }) => {
-  const baseClass = "member-edit-form"; // 클래스명 변수 선언
+  const baseClass = "components-admin-member-admin-member-edit-form"; // 클래스명 변수 선언
 
   return (
     <div className={`${baseClass}-container`}>

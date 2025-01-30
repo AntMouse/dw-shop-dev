@@ -9,6 +9,7 @@ import axios from "axios";
 
 // 4. 사용자가 만든 내부 컴포넌트 & 유틸리티
 import { API_BASE_URL } from "../../config/api";
+import { navigateToAdminMemberList } from "../../utils/adminNavigation";
 
 export const useEditMemberType = (initialData) => {
   const { id } = useParams();
@@ -43,7 +44,7 @@ export const useEditMemberType = (initialData) => {
   };
 
   const handleCancelClick = () => {
-    navigate("/admin/member/list");
+    navigateToAdminMemberList(navigate);
   };
 
   return { editMemberData, handleInputChange, handleSaveClick, handleCancelClick };
