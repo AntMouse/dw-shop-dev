@@ -9,7 +9,7 @@ import axios from "axios";
 
 // 4. 사용자가 만든 내부 컴포넌트 & 유틸리티
 import { API_BASE_URL } from "../../config/api";
-import { navigateToAdminMemberList } from "../../utils/adminNavigation";
+import { navigateToAdminPage } from "../../utils/adminNavigation";
 
 export const useEditMemberType = (initialData) => {
   const { id } = useParams();
@@ -36,7 +36,7 @@ export const useEditMemberType = (initialData) => {
         memberType: editMemberData.memberType,
       });
       alert("회원 정보가 성공적으로 업데이트되었습니다.");
-      navigate("/admin/member/list");
+      navigateToAdminPage(navigate, "memberList"); 
     } catch (error) {
       console.error("회원 정보를 업데이트하는 중 오류가 발생했습니다:", error);
       alert("회원 정보를 업데이트하는 중 오류가 발생했습니다.");
@@ -44,7 +44,7 @@ export const useEditMemberType = (initialData) => {
   };
 
   const handleCancelClick = () => {
-    navigateToAdminMemberList(navigate);
+    navigateToAdminPage(navigate, "memberList"); // ✅ 변경된 네비게이션 방식 반영
   };
 
   return { editMemberData, handleInputChange, handleSaveClick, handleCancelClick };

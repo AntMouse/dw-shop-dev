@@ -1,9 +1,11 @@
 ├── src
-│   ├── Components
+│   ├── components
 │   │   ├── admin
 │   │   │   ├── member
-│   │   │   │   ├── MemberEditPage.css
-│   │   │   │   ├── MemberEditPage.js
+│   │   │   │   ├── styles
+│   │   │   │   │   ├── AdminMemberEditForm.scss
+│   │   │   │   ├── AdminMemberEditForm.js
+│   │   │   │   ├── AdminMemberEditPage.js
 │   │   │   │   ├── memberHandlers.js
 │   │   │   │   ├── MemberList.js
 │   │   │   │   ├── MemberListPage.css
@@ -41,7 +43,6 @@
 │   │   │   │   ├── productListPageApi.js
 │   │   │   │   ├── SortUtilsFull.js
 │   │   ├── css
-│   │   │   ├── AdminMain.css
 │   │   │   ├── AdminMain.zip
 │   │   │   ├── cartlist.css
 │   │   │   ├── Delivery.css
@@ -96,10 +97,15 @@
 │   │   │   ├── utils.js
 │   ├── config
 │   │   ├── api.js
+│   ├── hooks
+│   │   ├── auth
+│   │   │   ├── useAuth.js
+│   │   ├── member
+│   │   │   ├── useEditMemberType.js
+│   │   │   ├── useFetchMember.js
 │   ├── page
 │   │   ├── Admin
 │   │   │   ├── AdminMain.js
-│   │   │   ├── MemberEditPage.js
 │   │   │   ├── MemberListPage.js
 │   │   │   ├── ProductEditPage.js
 │   │   │   ├── ProductListPage.js
@@ -120,6 +126,13 @@
 │   │   │   ├── UserDeliveryPage.js
 │   │   │   ├── UserInfo.css
 │   │   │   ├── UserInfoPage.js
+│   ├── styles
+│   │   ├── admin
+│   │   │   ├── AdminMain.css
+│   │   ├── member
+│   ├── utils
+│   │   ├── adminNavigation.js
+│   │   ├── maskUtils.js
 │   ├── App.css
 │   ├── App.js
 │   ├── App.test.js
@@ -130,3 +143,4 @@
 │   ├── reportWebVitals.js
 │   ├── setupTests.js
 │   ├── 파일구조.txt
+│   ├── 해야할 것들 정리
