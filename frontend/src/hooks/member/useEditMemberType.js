@@ -1,27 +1,37 @@
-// hooks/member/userEditMemberType.js
+// hooks/member/useEditMemberType.js
 
-// 1. React 기본 라이브러리 (React 관련 라이브러리)
+// 1. React 기본 라이브러리
 import { useState, useEffect } from "react";
 
 // 2. 외부 라이브러리
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
 
-// 4. 사용자가 만든 내부 컴포넌트 & 유틸리티
-import { API_BASE_URL } from "../../config/api";
+// 3. 서비스 가져오기
+import { updateMemberType } from "../../services/member/memberService"; // ✅ API 호출을 서비스에서 처리
 import { navigateToAdminPage } from "../../utils/adminNavigation";
 
 export const useEditMemberType = (initialData) => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [editMemberData, setEditMemberData] = useState(initialData);
+  const [editMemberData, setEditMemberData] = useState(initialData || {
+    memberType: "",
+    memberId: "",
+    memberName: "",
+    birthdate: "",
+    gender: "",
+    email: "",
+    contact: ""
+  });
 
-  // member 데이터가 업데이트될 때 editMemberData도 업데이트하도록 useEffect 추가
+  const handleCancelClick = () => {
+    navigateToAdminPage(navigate, "memberList");
+  };
+
   useEffect(() => {
     if (initialData) {
       setEditMemberData(initialData);
     }
-  }, [initialData]); // initialData가 변경될 때만 실행
+  }, [initialData]);
 
   const handleInputChange = (event, key) => {
     setEditMemberData((prevState) => ({
@@ -32,20 +42,13 @@ export const useEditMemberType = (initialData) => {
 
   const handleSaveClick = async () => {
     try {
-      await axios.put(`${API_BASE_URL}/api/members/${id}`, {
-        memberType: editMemberData.memberType,
-      });
+      await updateMemberType(id, editMemberData.memberType);
       alert("회원 정보가 성공적으로 업데이트되었습니다.");
-      navigateToAdminPage(navigate, "memberList"); 
-    } catch (error) {
-      console.error("회원 정보를 업데이트하는 중 오류가 발생했습니다:", error);
+      handleCancelClick();
+    } catch {
       alert("회원 정보를 업데이트하는 중 오류가 발생했습니다.");
     }
   };
-
-  const handleCancelClick = () => {
-    navigateToAdminPage(navigate, "memberList"); // ✅ 변경된 네비게이션 방식 반영
-  };
-
+  
   return { editMemberData, handleInputChange, handleSaveClick, handleCancelClick };
 };
