@@ -1,3 +1,4 @@
+// components/admin/product/ProductListPage.js
 import React, { useState, useEffect } from 'react';
 import './ProductListPage.css';
 import { fetchProducts, fetchProductTypes, fetchMainType } from './productListPageApi';

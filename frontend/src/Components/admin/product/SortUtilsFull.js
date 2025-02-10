@@ -1,3 +1,4 @@
+// components/admin/product/SortUtilsFull.js
 import React from 'react';
 
 export function SortControls({ handleSortChange, sortDirection, setSortDirection }) {

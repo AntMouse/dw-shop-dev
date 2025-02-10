@@ -7,9 +7,9 @@ import React from "react";
 import { useParams } from "react-router-dom"; 
 
 // 4. 사용자가 만든 내부 컴포넌트 & 유틸리티
-import MemberEditForm from "./AdminMemberEditForm";
-import { useFetchMember } from "../../../hooks/member/useFetchMember";
-import { useEditMemberType } from "../../../hooks/member/useEditMemberType";
+import AdminMemberEditForm from "./AdminMemberEditForm";
+import { useFetchMember } from "../../../hooks/admin/useAdminFetchMember";
+import { useEditMemberType } from "../../../hooks/admin/useAdminEditMemberType";
 
 function AdminMemberEditPage() {
   const { id } = useParams();
@@ -17,7 +17,7 @@ function AdminMemberEditPage() {
   const { editMemberData, handleInputChange, handleSaveClick, handleCancelClick } = useEditMemberType(member); // 바로 사용 가능
 
   return (
-    <MemberEditForm
+    <AdminMemberEditForm
       editMemberData={editMemberData}
       handleInputChange={handleInputChange}
       handleSaveClick={handleSaveClick}

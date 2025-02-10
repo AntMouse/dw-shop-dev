@@ -1,4 +1,4 @@
-// OrderItem.js
+// components/js/OrderItem.js
 
 import React from 'react';
 

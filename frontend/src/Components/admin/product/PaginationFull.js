@@ -1,4 +1,4 @@
-// src/components/PaginationFull.js
+// components/admin/product/PaginationFull.js
 import React from 'react';
 
 export function Pagination({

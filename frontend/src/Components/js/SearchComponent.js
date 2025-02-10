@@ -1,3 +1,4 @@
+// components/js/SearchComponent.js
 import React from 'react';
 import './SearchComponent.css';
 

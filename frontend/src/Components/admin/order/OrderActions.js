@@ -1,4 +1,4 @@
-// OrderActions.js
+// components/admin/order/OrderActions.js
 
 import React from 'react';
 import { handleDeleteClick, handleStatusUpdateClick } from './orderHandlers';

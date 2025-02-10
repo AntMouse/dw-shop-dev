@@ -1,3 +1,4 @@
+// components/admin/product/productListPageApi.js
 import axios from 'axios';
 import { showError, errorMessages } from './messages';
 import { API_BASE_URL } from '../../../config/api';

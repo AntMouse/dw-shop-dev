@@ -1,3 +1,4 @@
+// page/User/MainPage.js
 import React from 'react'
 import Slide from '../../components/js/Slide';
 import Header from '../../components/js/Header'

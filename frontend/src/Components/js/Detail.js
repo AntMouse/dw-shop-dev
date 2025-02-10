@@ -1,3 +1,4 @@
+// components/js/Detail.js
 import React, { useEffect, useState } from 'react'
 import '../css/Detail.css';
 import StarRating from './StarRating';

@@ -1,3 +1,4 @@
+// components/js/Order-detail.js
 import React, { useEffect, useState } from 'react';
 import '../css/Order-detail.css'; // CSS 파일 import
 import { useParams } from 'react-router-dom';

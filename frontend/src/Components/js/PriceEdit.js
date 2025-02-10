@@ -1,3 +1,4 @@
+// components/js/PriceEdit.js
 import React, { useState, useEffect } from 'react';
 import './PriceEdit.css';
 import Logo from '../../assets/Logo.png'; // 로고 이미지 경로에 따라 수정해야 합니다.

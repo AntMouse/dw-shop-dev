@@ -1,4 +1,4 @@
-// orderUtils.js
+// components/admin/order/orderUtils.js
 
 // 주문 상태 필터링 함수
 export const filteredOrders = (orders, selectedStatus) => {

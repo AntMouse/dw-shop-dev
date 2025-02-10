@@ -1,3 +1,4 @@
+// page/User/signupPage.js
 import React, { useEffect, useState } from 'react';
 import '../../components/css/member.css';
 import Logo from '../../assets/3.png';

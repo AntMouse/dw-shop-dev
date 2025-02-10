@@ -1,4 +1,4 @@
-// src/components/page/ProductEditPage.js
+// components/admin/product/ProductEditPage.js
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { fetchAndSetProduct, fetchAndSetProductTypes, handleInputChange, handleSaveClick } from './productHandlers';

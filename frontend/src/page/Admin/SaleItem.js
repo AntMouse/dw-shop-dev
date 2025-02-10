@@ -1,3 +1,4 @@
+// page/Admin/SaleItem.js
 import React from 'react';
 
 const SaleItem = ({ sale }) => {

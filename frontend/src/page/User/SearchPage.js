@@ -1,3 +1,4 @@
+// page/User/SearchPage.js
 import React from 'react'
 import Header from '../../components/js/Header'
 import Goods from '../../components/js/Goods'

@@ -1,3 +1,4 @@
+// components/js/Delivery.js
 import React, { useEffect, useState } from 'react';
 import '../css/Delivery.css'; // CSS 파일을 임포트합니다.
 import Logo from '../../assets/DW.png'; // 로고 이미지를 임포트합니다.

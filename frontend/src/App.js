@@ -1,3 +1,4 @@
+// App.js
 import './App.css';
 import { BrowserRouter as Router, Route, Routes, useLocation, Navigate } from 'react-router-dom';
 import SearchPage from './page/User/SearchPage';
@@ -18,7 +19,7 @@ import { OrderDetailPage } from './page/User/OrderDetailPage'
 
 import AdminOrderList from './components/admin/order/OrderListPage'
 import AdminOrderEdit from './components/admin/order/OrderEditPage'
-import AdminMemberList from './components/admin/member/MemberListPage'
+import AdminMemberList from './components/admin/member/AdminMemberListPage'
 import AdminMemberEdit from './components/admin/member/AdminMemberEditPage'
 import AdminProductList from './components/admin/product/ProductListPage'
 import AdminProductEdit from './components/admin/product/ProductEditPage'
@@ -31,6 +32,10 @@ function App() {
   return (
     <Router>
       <Routes>
+        {/* 임시 테스트 코드 */}
+
+        {/* 임시 테스트 코드 */}
+
         <Route path='/' element={<MainPage />} />
         <Route path='/login' element={<Login setUserType={setUserType} />} />
         <Route path='/products/:categoryId' element={<SearchPage />} />

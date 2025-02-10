@@ -1,4 +1,4 @@
-// 1. React 기본 라이브러리 (React 관련 라이브러리)
+// page/Admin/AdminMain.js
 import React from 'react'
 
 // 2. 외부 라이브러리

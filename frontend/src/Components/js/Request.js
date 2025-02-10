@@ -1,3 +1,4 @@
+// components/js/Request.js
 import React, { useEffect, useState } from 'react';
 import '../css/Request.css'; // CSS 파일 import
 import axios from 'axios';

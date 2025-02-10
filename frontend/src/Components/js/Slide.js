@@ -1,3 +1,4 @@
+// components/js/Slide.js
 import React, { useEffect, useRef, useState } from 'react';
 import '../css/Slide.css';
 

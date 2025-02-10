@@ -1,4 +1,4 @@
-// OrderSearchComponent.js
+// components/admin/order/OrderSearchComponent.js
 
 import React from 'react';
 import './OrderListPage.css';

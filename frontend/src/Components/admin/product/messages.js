@@ -1,3 +1,4 @@
+// components/admin/product/messages.js
 export const showError = (message) => {
     alert(message);
   };

@@ -1,4 +1,4 @@
-// OrderListPage.js
+// components/admin/order/OrderListPage.js
 
 import React, { useState, useEffect } from 'react';
 import './OrderListPage.css';

@@ -1,3 +1,4 @@
+// components/js/MyPage.js
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { API_BASE_URL } from '../../config/api';

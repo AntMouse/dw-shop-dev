@@ -1,3 +1,4 @@
+// components/js/SearchRequest.js
 import React, { useEffect, useState } from 'react';
 import '../css/Goods.css'; // 스타일 파일 경로 수정
 import { Link, useParams } from 'react-router-dom';

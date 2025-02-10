@@ -1,4 +1,4 @@
-// OrderPagination.js
+// components/admin/order/OrderPagination.js
 
 import React from 'react';
 import './OrderListPage.css';

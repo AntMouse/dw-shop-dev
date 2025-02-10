@@ -1,3 +1,4 @@
+// page/User/ProductDetailPage.js
 import React from 'react'
 import Header from '../../components/js/Header'
 import Detail from '../../components/js/Detail'

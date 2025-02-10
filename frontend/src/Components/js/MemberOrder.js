@@ -1,3 +1,4 @@
+// components/js/MemberOrder.js
 import React, { useEffect, useState } from 'react';
 import '../css/MemberOrder.css';
 // 이미지 경로 가져오기

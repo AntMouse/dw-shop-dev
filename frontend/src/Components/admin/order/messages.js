@@ -1,4 +1,4 @@
-// messages.js
+// components/admin/order/messages.js
 
 // 에러 메시지를 알림창으로 표시하는 함수
 export const showError = (message) => {

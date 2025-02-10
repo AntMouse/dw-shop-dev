@@ -1,3 +1,4 @@
+// components/admin/product/FilterControls.js
 import React from 'react';
 
 function FilterControls({

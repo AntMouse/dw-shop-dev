@@ -1,3 +1,4 @@
+// page/User/UserInfoPage.js
 import React from 'react'
 import { Userinfosubmenu } from '../../components/js/Userinfosubmenu'
 import { MyPage } from '../../components/js/MyPage'

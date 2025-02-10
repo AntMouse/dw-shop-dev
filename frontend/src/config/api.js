@@ -3,6 +3,9 @@
 // 2. 외부 라이브러리
 import axios from "axios";
 
+// 4. 사용자가 만든 내부 컴포넌트 & 유틸리티
+import { getToken, removeToken } from "../utils/storage/tokenStorage";
+
 export const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 const api = axios.create({
@@ -12,33 +15,31 @@ const api = axios.create({
   },
 });
 
-// ✅ 요청 인터셉터 (Authorization 자동 추가)
-api.interceptors.request.use((config) => {
-  let token = localStorage.getItem("token");
+/**
+ * ✅ 요청 인터셉터 (토큰 자동 추가)
+ */
+api.interceptors.request.use(
+  (config) => {
+    const token = getToken();
 
-  // 🚨 `Bearer ` 중복 방지
-  if (token && token.startsWith("Bearer ")) {
-    token = token.replace("Bearer ", "");
-  }
-
-  const noAuthRequired = ["/api/login", "/api/register"];
-
-  if (token) {
-    if (!noAuthRequired.includes(config.url)) {
+    if (token) {
       config.headers.Authorization = `Bearer ${token}`;
-    }
-  }
+    } 
 
-  return config;
-}, (error) => Promise.reject(error));
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
 
-// ✅ 응답 인터셉터 (에러 핸들링 + 토큰 만료 체크)
+/**
+ * ✅ 응답 인터셉터 (401 에러 발생 시 로그아웃)
+ */
 api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      localStorage.removeItem("token"); // ✅ 만료된 토큰 삭제
-      window.location.href = "/login"; // ✅ 로그인 페이지로 이동
+      removeToken();
+      window.location.replace("/login"); // ✅ `replace()`로 변경
     }
     return Promise.reject(error);
   }
