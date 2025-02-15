@@ -21,14 +21,13 @@ import com.example.DWShopProject.common.enums.MemberRoleEnum;
 import com.example.DWShopProject.member.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Collections;
-import java.util.Random;
+import java.time.YearMonth;
+import java.util.*;
 
-//@Component
+// @Component
 public class DataInitializer implements CommandLineRunner {
 
     @Autowired
@@ -101,76 +100,104 @@ public class DataInitializer implements CommandLineRunner {
 
         productRepository.saveAll(products);
 
-        // 회원 및 장바구니 생성
-        for (int i = 1; i <= 7; i++) {
-            MemberDto memberDto = MemberDto.builder()
-                    .memberType(MemberRoleEnum.USER)
-                    .memberId("user" + i)
-                    .memberName("User " + i)
-                    .password("1234")
-                    .birthdate("1990-01-0" + i)
-                    .gender(i % 2 == 0 ? "Male" : "Female")
-                    .email("user" + i + "@example.com")
-                    .contact("123-456-789" + i)
-                    .build();
-
-            memberService.signUp(memberDto);
-        }
-
+        // 관리자 계정 생성
         MemberDto adminDto = MemberDto.builder()
-                .memberType(MemberRoleEnum.USER)
+                .memberType(MemberRoleEnum.ADMIN)
                 .memberId("admin")
-                .memberName("Admin")
+                .memberName("Admin의 이름")
                 .password("1234")
                 .birthdate("1980-01-01")
                 .gender("Male")
                 .email("admin@example.com")
                 .build();
-
         memberService.createAdmin(adminDto);
 
-        List<Cart> carts = cartRepository.findAll();
+        // 회원 및 장바구니 생성
+        List<Member> members = new ArrayList<>();
+        Random random = new Random();
+        Set<String> generatedPhoneNumbers = new HashSet<>();
 
+        for (int i = 1; i <= 4000; i++) {
+            // 랜덤 연도 (1960~2005)
+            int year = random.nextInt(2005 - 1975 + 1) + 1975;
+
+            // 랜덤 월 및 해당 월의 최대 일 계산
+            int month = random.nextInt(12) + 1;
+            int maxDay = YearMonth.of(year, month).lengthOfMonth();
+            int day = random.nextInt(maxDay) + 1;
+
+            // 랜덤 성별 지정
+            String gender = random.nextBoolean() ? "Male" : "Female";
+
+            // 랜덤 전화번호 생성 (중복 방지, 형식 유지)
+            String phoneNumber;
+            do {
+                int firstPart = random.nextInt(9000) + 1000; // 4자리 숫자
+                int secondPart = random.nextInt(9000) + 1000; // 4자리 숫자
+                phoneNumber = "018-" + firstPart + "-" + secondPart;
+            } while (generatedPhoneNumbers.contains(phoneNumber));
+            generatedPhoneNumbers.add(phoneNumber);
+
+            MemberDto memberDto = MemberDto.builder()
+                    .memberType(MemberRoleEnum.USER)
+                    .memberId("user" + i)
+                    .memberName("User " + i + " 의 이름")
+                    .password("1234")
+                    .birthdate(year + "-" + String.format("%02d", month) + "-" + String.format("%02d", day))
+                    .gender(gender)
+                    .email("user" + i + "@example.com")
+                    .contact(phoneNumber)
+                    .build();
+            memberService.signUp(memberDto);
+        }
+
+        // 장바구니 생성 (모든 회원이 1개씩 보유)
+        List<Cart> carts = cartRepository.findAll();
+        Random cartRandom = new Random();
+
+        // 주문을 할 1500명의 회원 랜덤 선택
+        List<Member> allMembers = memberRepository.findAll();
+        Collections.shuffle(allMembers);
+        List<Member> orderingMembers = allMembers.subList(0, 1500);
+
+        // 장바구니 아이템 생성 (1500명의 회원만 보유)
         List<CartItem> cartItems = new ArrayList<>();
-        int productIndex = 0;
-        for (Cart cart : carts) {
-            List<Product> shuffledProducts = new ArrayList<>(products);
-            Collections.shuffle(shuffledProducts);
-            for (int j = 0; j < 5; j++) {
-                Product product = shuffledProducts.get(j);
-                CartItem cartItem = CartItem.builder()
-                        .cart(cart)
-                        .product(product)
-                        .quantity(1)
-                        .build();
-                cartItems.add(cartItem);
+        for (Member member : orderingMembers) {
+            Cart cart = cartRepository.findByMember(member).orElse(null);
+            if (cart != null) {
+                List<Product> shuffledProducts = new ArrayList<>(products);
+                Collections.shuffle(shuffledProducts);
+
+                // 1~20개의 CartItem을 생성
+                int cartItemCount = cartRandom.nextInt(20) + 1;
+                for (int j = 0; j < cartItemCount; j++) {
+                    CartItem cartItem = CartItem.builder()
+                            .cart(cart)
+                            .product(shuffledProducts.get(j))
+                            .quantity(cartRandom.nextInt(10) + 1) // 1~10개 수량 설정
+                            .build();
+                    cartItems.add(cartItem);
+                }
             }
         }
         cartItemRepository.saveAll(cartItems);
 
-        // 주문 생성
-        List<Member> members1 = memberRepository.findAll();
-        Random random = new Random();
-
-        for (Member member : members1) {
-            for (int j = 0; j < 5; j++) { // 각 회원마다 5개의 주문 생성
-                List<OrderItem> orderItems = new ArrayList<>();
-                int totalPrice = 0;
-
-                for (int k = 0; k < random.nextInt(5) + 1; k++) { // 각 주문마다 1~5개의 랜덤 상품 추가
-                    Product product = products.get(random.nextInt(products.size()));
-                    int quantity = random.nextInt(5) + 1;
-
+        // 주문 생성 (1500개만)
+        List<Order> orders = new ArrayList<>();
+        for (Member member : orderingMembers) {
+            List<OrderItem> orderItems = new ArrayList<>();
+            int totalPrice = 0;
+            Cart cart = cartRepository.findByMember(member).orElse(null);
+            if (cart != null) {
+                for (CartItem cartItem : cartItemRepository.findByCart(cart)) {
                     OrderItem orderItem = OrderItem.builder()
-                            .product(product)
-                            .quantity(quantity)
-                            .price(product.getPrice())
+                            .product(cartItem.getProduct())
+                            .quantity(cartItem.getQuantity())
+                            .price(cartItem.getProduct().getPrice())
                             .build();
-
                     orderItems.add(orderItem);
-                    totalPrice += product.getPrice() * quantity;
+                    totalPrice += cartItem.getProduct().getPrice() * cartItem.getQuantity();
                 }
-
                 Order order = Order.builder()
                         .member(member)
                         .orderItems(orderItems)
@@ -178,19 +205,12 @@ public class DataInitializer implements CommandLineRunner {
                         .contactNumber(member.getContact())
                         .deliveryLocation("주소 " + member.getMemberId())
                         .createDate(LocalDateTime.now())
-                        .request("요청사항 " + j)
                         .totalPrice(totalPrice)
                         .status(OrderStatusEnum.PENDING)
                         .build();
-
-                orderRepository.save(order);
-
-                for (OrderItem orderItem : orderItems) {
-                    orderItem.setOrder(order);
-                    orderItemRepository.save(orderItem);
-                }
+                orders.add(order);
             }
-
         }
+        orderRepository.saveAll(orders);
     }
 }
