@@ -1,96 +1,118 @@
 // hooks/admin/shared/useAdminHandlers.js
 
-// ✅ 목록 새로고침 핸들러
-export const refreshList = async (getList, setItems, setDisplayedItemCount, setShowItems, setCurrentPage, getSortedItems, onError) => {
-  try {
-    const items = await getList();
-    if (!Array.isArray(items) || items.length === 0) {
-      if (onError) onError("불러온 데이터가 없습니다.");
-      setItems([]);
-      setDisplayedItemCount(0);
-      return;
-    }
-    setItems(items);
-    setDisplayedItemCount(getSortedItems(items, null).length); // ✅ 정렬된 데이터 개수 반영
-    setShowItems(true);
-    setCurrentPage(1);
-  } catch (error) {
-    if (onError) onError(`데이터를 불러오는 중 오류가 발생했습니다: ${error.message}`);
-  }
-};
+import { useState } from "react";
 
-// ✅ 상세 정보 새로고침 핸들러
-export const refreshDetail = async (getDetail, itemId, setItemData, onError) => {
-  try {
-    const item = await getDetail(itemId);
-    if (!item) {
-      if (onError) onError("데이터를 불러올 수 없습니다.");
-      return;
-    }
-    setItemData(item);
-  } catch (error) {
-    if (onError) onError(`데이터를 불러오는 중 오류가 발생했습니다: ${error.message}`);
-  }
-};
+export const useAdminHandlers = (
+  fetchItemListFunc, 
+  fetchItemDetailFunc, 
+  updateItemFunc, 
+  deleteItemFunc, 
+  onError
+) => {
+  const [editItemId, setEditItemId] = useState(null);
+  const [editItemData, setEditItemData] = useState(null);
+  const [items, setItems] = useState([]); // ✅ 공통 데이터 리스트 상태
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
-// ✅ 데이터 저장 핸들러 (필수 필드를 외부에서 전달받도록 수정)
-export const saveData = async (updateFunction, itemId, itemData, requiredFields, refreshList, setItemId, setItemData, onSuccess, onError) => {
-  // ✅ 필수 필드 검사
-  for (const field of requiredFields) {
-    if (!itemData?.[field]) {
-      if (onError) onError(`${field} 값을 입력해야 합니다.`);
-      return;
-    }
-  }
-
-  try {
-    await updateFunction(itemId, itemData);
-    await refreshList(onError);
-    setItemId(null);
-    setItemData(null);
-    if (onSuccess) onSuccess("성공적으로 저장되었습니다.");
-  } catch (error) {
-    if (onError) onError("저장 중 오류가 발생했습니다.");
-  }
-};
-
-// ✅ 데이터 삭제 핸들러
-export const deleteData = async (deleteFunction, itemId, onSuccess, onError) => {
-  if (window.confirm("정말 삭제하시겠습니까?")) {
+  const fetchItemList = async () => {
+    setIsLoading(true);
     try {
-      await deleteFunction(itemId);
-      if (onSuccess) onSuccess("성공적으로 삭제되었습니다.");
+      const data = await fetchItemListFunc();
+
+      if (!Array.isArray(data) || data.length === 0) {
+        if (onError) onError("불러온 데이터가 없습니다.");
+        setItems([]);
+        return;
+      }
+
+      setItems(data);
     } catch (error) {
-      if (onError) onError("삭제 중 오류가 발생했습니다.");
+      setError(`데이터를 불러오는 중 오류 발생: ${error.message}`);
+      if (onError) onError(error.message);
+    } finally {
+      setIsLoading(false);
     }
-  }
-};
+  };
 
-// ✅ 데이터 수정 핸들러 (공용)
-export const editItem = async (getDetailFunction, itemId, setItemData, setItemId, onError) => {
-  try {
-    const itemData = await getDetailFunction(itemId);
-    if (!itemData) {
-      if (onError) onError("데이터를 불러올 수 없습니다.");
-      return;
+  const fetchItemDetail = async (itemId) => {
+    try {
+      const item = await fetchItemDetailFunc(itemId);
+      if (!item) {
+        if (onError) onError("데이터를 불러올 수 없습니다.");
+        return;
+      }
+      setEditItemData(item);
+      setEditItemId(itemId);
+    } catch (error) {
+      setError(`데이터를 불러오는 중 오류 발생: ${error.message}`);
+      if (onError) onError(error.message);
     }
-    setItemData(itemData);
-    setItemId(itemId);
-  } catch (error) {
-    if (onError) onError("데이터를 불러오는 중 오류가 발생했습니다.");
-  }
-};
+  };
 
-// ✅ 입력값 변경 핸들러
-export const updateInputValue = (event, key, setItemData) => {
-  setItemData((prevState) => ({
-    ...prevState,
-    [key]: event.target.value,
-  }));
-};
+  const updateItem = async (requiredFields, onSuccess) => {
+    // ✅ 필수 필드 검사
+    for (const field of requiredFields) {
+      if (!editItemData?.[field]) {
+        if (onError) onError(`${field} 값을 입력해야 합니다.`);
+        return;
+      }
+    }
 
-// ✅ 취소 핸들러 (공용)
-export const cancelEdit = (setItemId, setItemData) => {
-  setItemId(null);
-  setItemData(null);
+    try {
+      await updateItemFunc(editItemId, editItemData); // ✅ 저장 실행
+      await fetchItemList();  // ✅ 최신 목록 다시 불러오기
+      setEditItemId(null);
+      setEditItemData(null);
+      if (onSuccess) onSuccess("성공적으로 저장되었습니다.");
+    } catch (error) {
+      setError("저장 중 오류가 발생했습니다.");
+      if (onError) onError(error.message);
+    }
+  };
+
+  const deleteItem = async (itemId, onSuccess) => {
+    if (!window.confirm("정말 삭제하시겠습니까?")) return;
+  
+    try {
+      const response = await deleteItemFunc(itemId);
+      
+      if (response?.status === 200 || response?.status === 204) {
+        await fetchItemList();
+        if (onSuccess) onSuccess("성공적으로 삭제되었습니다.");
+      } else {
+        throw new Error("서버에서 삭제되지 않았습니다.");
+      }
+    } catch (error) {
+      setError("삭제 중 오류가 발생했습니다.");
+      if (onError) onError(error.message);
+    }
+  };  
+
+  const updateInputValue = (event, key) => {
+    setEditItemData((prevState) => ({
+      ...prevState,
+      [key]: event.target.value,
+    }));
+  };
+
+  const cancelEdit = () => {
+    setEditItemId(null);
+    setEditItemData(null);
+  };
+
+  return {
+    editItemId,
+    editItemData,
+    items,
+    setItems,
+    isLoading,
+    error,
+    fetchItemList,
+    fetchItemDetail,
+    updateItem,
+    deleteItem,
+    updateInputValue,
+    cancelEdit,
+  };
 };

@@ -30,6 +30,12 @@ import java.util.*;
 // @Component
 public class DataInitializer implements CommandLineRunner {
 
+    // 한 곳에서 숫자 관리
+    private static final int TOTAL_MEMBERS = 500; // 전체 회원 수
+    private static final int ORDERING_MEMBERS_COUNT = 100; // 주문을 하는 회원 수
+    private static final int CART_ITEM_HOLDERS_COUNT = ORDERING_MEMBERS_COUNT; // 장바구니 아이템을 보유한 회원 수
+    private static final int TOTAL_ORDERS = ORDERING_MEMBERS_COUNT; // 총 주문 개수
+
     @Autowired
     private ProductRepository productRepository;
 
@@ -117,7 +123,7 @@ public class DataInitializer implements CommandLineRunner {
         Random random = new Random();
         Set<String> generatedPhoneNumbers = new HashSet<>();
 
-        for (int i = 1; i <= 4000; i++) {
+        for (int i = 1; i <= TOTAL_MEMBERS; i++) {
             // 랜덤 연도 (1960~2005)
             int year = random.nextInt(2005 - 1975 + 1) + 1975;
 
@@ -153,28 +159,27 @@ public class DataInitializer implements CommandLineRunner {
 
         // 장바구니 생성 (모든 회원이 1개씩 보유)
         List<Cart> carts = cartRepository.findAll();
-        Random cartRandom = new Random();
 
-        // 주문을 할 1500명의 회원 랜덤 선택
+        // ✅ 주문을 할 회원 랜덤 선택
         List<Member> allMembers = memberRepository.findAll();
         Collections.shuffle(allMembers);
-        List<Member> orderingMembers = allMembers.subList(0, 1500);
+        List<Member> orderingMembers = allMembers.subList(0, ORDERING_MEMBERS_COUNT); // ✅ ORDERING_MEMBERS_COUNT 변수 사용
 
-        // 장바구니 아이템 생성 (1500명의 회원만 보유)
+        // ✅ 장바구니 아이템 생성 (ORDERING_MEMBERS_COUNT 명의 회원만 보유)
         List<CartItem> cartItems = new ArrayList<>();
+        Random cartRandom = new Random();
         for (Member member : orderingMembers) {
             Cart cart = cartRepository.findByMember(member).orElse(null);
             if (cart != null) {
-                List<Product> shuffledProducts = new ArrayList<>(products);
+                List<Product> shuffledProducts = new ArrayList<>(productRepository.findAll());
                 Collections.shuffle(shuffledProducts);
 
-                // 1~20개의 CartItem을 생성
-                int cartItemCount = cartRandom.nextInt(20) + 1;
+                int cartItemCount = cartRandom.nextInt(20) + 1; // 1~20개 랜덤 설정
                 for (int j = 0; j < cartItemCount; j++) {
                     CartItem cartItem = CartItem.builder()
                             .cart(cart)
                             .product(shuffledProducts.get(j))
-                            .quantity(cartRandom.nextInt(10) + 1) // 1~10개 수량 설정
+                            .quantity(cartRandom.nextInt(10) + 1)
                             .build();
                     cartItems.add(cartItem);
                 }
@@ -182,7 +187,7 @@ public class DataInitializer implements CommandLineRunner {
         }
         cartItemRepository.saveAll(cartItems);
 
-        // 주문 생성 (1500개만)
+        // ✅ 주문 생성 (TOTAL_ORDERS 개만)
         List<Order> orders = new ArrayList<>();
         for (Member member : orderingMembers) {
             List<OrderItem> orderItems = new ArrayList<>();

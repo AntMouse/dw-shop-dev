@@ -32,10 +32,10 @@ export const calculateTotalPages = (totalItems, itemsPerPage) => {
  * ✅ 페이지 버튼 범위 계산 함수
  * @param {number} currentPage - 현재 페이지
  * @param {number} totalPages - 전체 페이지 수
- * @param {number} maxPageButtons - 표시할 최대 페이지 버튼 수 (기본값: 5)
+ * @param {number} maxPageButtons - 표시할 최대 페이지 버튼 수 (기본값: 10)
  * @returns {Object} - 시작 페이지 및 종료 페이지 범위
  */
-export const calculatePaginationRange = (currentPage, totalPages, maxPageButtons = 5) => {
+export const calculatePaginationRange = (currentPage, totalPages, maxPageButtons = 10) => {
   const halfMaxPageButtons = Math.floor(maxPageButtons / 2);
 
   let startPage = Math.max(1, currentPage - halfMaxPageButtons);
@@ -53,14 +53,11 @@ export const calculatePaginationRange = (currentPage, totalPages, maxPageButtons
 };
 
 /**
- * ✅ 페이지당 항목 개수 변경 핸들러
- * @param {Event} event - select 요소의 이벤트 객체
- * @param {Function} setItemsPerPage - 상태 업데이트 함수 (페이지당 항목 개수)
- * @param {Function} setCurrentPage - 상태 업데이트 함수 (현재 페이지)
+ * ✅ 페이지당 항목 개수 변경 핸들러 (공용 함수)
  */
 export const handleItemsPerPageChange = (event, setItemsPerPage, setCurrentPage) => {
   const newItemsPerPage = Number(event.target.value);
-
+  if (isNaN(newItemsPerPage) || newItemsPerPage <= 0) return; // ✅ 방어 코드 추가
   setItemsPerPage(newItemsPerPage);
   setCurrentPage(1); // ✅ 페이지네이션을 처음부터 다시 시작
 };

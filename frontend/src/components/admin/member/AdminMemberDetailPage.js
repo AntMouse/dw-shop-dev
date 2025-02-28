@@ -16,14 +16,14 @@ import { updateMemberType } from "../../../services/member/memberService";
 function AdminMemberDetailPage() {
   const navigate = useNavigate();
   const { item: editMemberData } = useAdminFetchMember();
-  const { handleInputChange, handleSaveClick } = useAdminMemberHandlers();
+  const { handleMemberUpdateInputValue, handleSaveMember } = useAdminMemberHandlers();
 
   return (
     <AdminMemberEditForm
       editMemberData={editMemberData}
-      handleInputChange={handleInputChange}
+      handleInputChange={handleMemberUpdateInputValue}
       handleSaveClick={() =>
-        handleSaveClick(
+        handleSaveMember(
           (id, data) => updateMemberType(id, data.memberType),
           ["memberType"],
           (message) => alert(message),

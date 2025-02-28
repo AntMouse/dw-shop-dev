@@ -26,7 +26,7 @@ import AdminProductEdit from './components/admin/product/ProductEditPage'
 import SaleList from './page/Admin/SaleList';
 
 // 테스트 코드 임포트 시작
-import TestFetchMembers from "./test/TestFetchMembers";
+
 // 테스트 코드 임포트 끝
 
 function App() {
@@ -37,7 +37,7 @@ function App() {
     <Router>
       <Routes>
         {/* 임시 테스트 코드 */}
-        <Route path='/test-fetch-members' element={<TestFetchMembers />} />
+        {/*<Route path='/test' element={<TestSearchPage />} />*/}
         {/* 임시 테스트 코드 */}
 
         <Route path='/' element={<MainPage />} />

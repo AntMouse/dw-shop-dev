@@ -13,6 +13,7 @@ import styles from "./AdminTableRow.module.css";
 const AdminTableRow = ({
   rowData,
   fields,
+  index,
   onInputChange,
   onSave,
   onCancel,
@@ -26,36 +27,33 @@ const AdminTableRow = ({
   const rowClass = useCommonStyles(useCustomStyles, customClass, styles.row);
   const isFeatureEnabled = useFeatureToggle(enabledFeatures);
 
-  // ✅ 기능이 비활성화된 경우 렌더링하지 않음
-  if (!isFeatureEnabled("tableRow")) return null;
+  if (!enabledFeatures.length || enabledFeatures.every((feature) => !isFeatureEnabled(feature))) return null;
 
   return (
     <tr className={rowClass}>
-      {isFeatureEnabled("tableRow") ? (
-          fields.map((field) => (
-              <td key={field.key} className={styles.field}>
-                  {isEditing ? (
-                      <input
-                          type="text"
-                          className={styles.input}
-                          value={rowData[field.key]}
-                          onChange={(e) => onInputChange(e, field.key)}
-                      />
-                  ) : (
-                      <div className={styles[field.key]}>
-                          {rowData[field.key]}
-                      </div>
-                  )}
-              </td>
-          ))
-        ) : (
-          <>
-            <td className={styles.field} colSpan={fields.length}>
-              ⚠️ 데이터가 표시되지 않음 (isFeatureEnabled() = false)
-            </td>
-          </>
-        )}
+      {/* ✅ tableRow 활성화 시 번호 표시 */}
+      {isFeatureEnabled("tableRow") && <td className={styles.numberColumn}>{typeof index === "number" ? index + 1 : 1}</td>}
 
+      {/* ✅ 일반 필드 표시 */}
+      {isFeatureEnabled("tableRow") &&
+        fields.map((field) => (
+          <td key={field.key} className={styles.field}>
+            {isEditing ? (
+              <input
+                type="text"
+                className={styles.input}
+                value={rowData[field.key]}
+                onChange={(e) => onInputChange(e, field.key)}
+              />
+            ) : (
+              <div className={styles[field.key]}>
+                {rowData[field.key]}
+              </div>
+            )}
+          </td>
+        ))}
+
+      {/* ✅ tableActions 활성화 시 버튼 표시 */}
       {isFeatureEnabled("tableActions") && (
         <td className={styles.buttons}>
           {isEditing ? (

@@ -3,25 +3,23 @@
 // 1. React 기본 라이브러리 (React 관련 라이브러리)
 import React from "react";
 
-// 2. 외부 라이브러리
-import { Link } from "react-router-dom";
-
 // 4. 사용자가 만든 내부 컴포넌트 & 유틸리티
 import AdminTableRow from "../shared/table/AdminTableRow";
 import { maskPhoneNumber } from "../../../utils/string/maskUtils"; // ✅ 유틸리티 함수 임포트
 
 const AdminMemberTableRow = ({
   member,
+  index,
   editMemberId,
   editMemberData,
   handleInputChange,
   handleSaveClickWrapper,
   handleCancelClickWrapper,
   handleEditClick,
-  handleDeleteClickWrapper,
+  handleDeleteMember,
   useCustomStyles = false,
   customClass = "",
-  enabledFeatures = ["tableRow", "tableActions"],
+  enabledFeatures,
 }) => {
   const isEditing = editMemberId === member.id;
 
@@ -40,11 +38,12 @@ const AdminMemberTableRow = ({
         { key: "email", label: "이메일" },
         { key: "contact", label: "전화번호" }, // ✅ 전화번호는 마스킹된 값으로 적용
       ]}
+      index={index}
       onInputChange={handleInputChange}
       onSave={handleSaveClickWrapper}
       onCancel={handleCancelClickWrapper}
       onEdit={() => handleEditClick(member.id)}
-      onDelete={handleDeleteClickWrapper}
+      onDelete={handleDeleteMember}
       isEditing={isEditing}
       useCustomStyles={useCustomStyles}
       customClass={customClass}

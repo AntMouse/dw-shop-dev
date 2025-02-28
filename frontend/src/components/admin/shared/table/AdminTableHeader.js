@@ -20,19 +20,21 @@ const AdminTableHeader = ({
   const tableHeaderClass = useCommonStyles(useCustomStyles, customClass, styles.tableHeader);
   const isFeatureEnabled = useFeatureToggle(enabledFeatures);
 
-  // ✅ 기능이 비활성화된 경우 렌더링하지 않음
-  if (!isFeatureEnabled("tableHeader")) return null;
+  if (!enabledFeatures.length || enabledFeatures.every((feature) => !isFeatureEnabled(feature))) return null;
 
-  if (!columns || columns.length === 0) return null;
+  // ✅ "번호" 열을 포함한 테이블 컬럼 구성
+  const tableColumns = ["번호", ...columns];
 
   return (
     <thead className={tableHeaderClass}>
       <tr>
-        {columns.map((column, index) => (
-          <th key={index} className={columnClasses[index] ? styles[columnClasses[index]] : ""}>
-            {column}
-          </th>
-        ))}
+        {/* ✅ tableHeader가 활성화된 경우에만 실행 */}
+        {isFeatureEnabled("tableHeader") &&
+          tableColumns.map((column, index) => (
+            <th key={index} className={columnClasses[index] ? styles[columnClasses[index]] : ""}>
+              {column}
+            </th>
+          ))}
       </tr>
     </thead>
   );
