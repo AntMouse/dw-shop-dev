@@ -1,6 +1,20 @@
 // utils/feature/featureUtils.js
 
-// ✅ 공통 기능 활성화 유틸 함수
-export const isFeatureSetEnabled = (enabledFeatures, isFeatureEnabled) => {
-    return enabledFeatures.length > 0 && enabledFeatures.some(isFeatureEnabled);
-  };  
+/**
+ * ✅ 특정 기능이 활성화되었는지 확인하는 유틸 함수
+ * @param {string[]} enabledFeatures - 활성화된 기능 목록
+ * @param {string} feature - 체크할 기능
+ * @returns {boolean}
+ */
+export const isFeatureEnabled = (enabledFeatures, feature) => {
+  return enabledFeatures.includes(feature);
+};
+
+/**
+* ✅ 최소 하나 이상의 기능이 활성화되었는지 확인하는 유틸 함수
+* @param {string[]} enabledFeatures - 활성화된 기능 목록
+* @returns {boolean}
+*/
+export const isFeatureSetEnabled = (enabledFeatures) => {
+  return enabledFeatures.length > 0 && enabledFeatures.some(feature => isFeatureEnabled(enabledFeatures, feature));
+};

@@ -27,26 +27,35 @@ export const filterItemsByDateRange = (items, dateField, startDate = null, endDa
  * @param {string} period - 기간 옵션 ("1일", "1주", "1개월", "6개월", "1년", "전체")
  * @returns {Object} - { startDate, endDate } 반환
  */
-export const getDateRangeFromOption = (period) => {
+export const getDateRangeFromOption = (period, customStart = null, customEnd = null) => {
   const today = new Date();
   let startDate = null;
   let endDate = today;
 
   switch (period) {
     case "1일":
-      startDate = new Date(today.setDate(today.getDate() - 1));
+      startDate = new Date();
+      startDate.setDate(today.getDate() - 1); // ✅ today를 변경하지 않고 새 객체에 적용
       break;
     case "1주":
-      startDate = new Date(today.setDate(today.getDate() - 7));
+      startDate = new Date();
+      startDate.setDate(today.getDate() - 7);
       break;
     case "1개월":
-      startDate = new Date(today.setMonth(today.getMonth() - 1));
+      startDate = new Date();
+      startDate.setMonth(today.getMonth() - 1);
       break;
     case "6개월":
-      startDate = new Date(today.setMonth(today.getMonth() - 6));
+      startDate = new Date();
+      startDate.setMonth(today.getMonth() - 6);
       break;
     case "1년":
-      startDate = new Date(today.setFullYear(today.getFullYear() - 1));
+      startDate = new Date();
+      startDate.setFullYear(today.getFullYear() - 1);
+      break;
+    case "직접 입력":
+      startDate = customStart && customStart !== "" ? new Date(customStart) : null;
+      endDate = customEnd && customEnd !== "" ? new Date(customEnd) : null;
       break;
     case "전체":
     default:

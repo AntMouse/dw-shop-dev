@@ -26,7 +26,7 @@ const AdminTable = ({
 
   indexOffset = 1,
 }) => {
-  const { isFeatureEnabled, containerClass, isAnyFeatureEnabled } = useAdminComponentUtils(
+  const { isFeatureEnabled, isAnyFeatureEnabled, containerClass } = useAdminComponentUtils(
     enabledFeatures,
     useCustomStyles,
     customClass,

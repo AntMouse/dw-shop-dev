@@ -22,13 +22,13 @@ const AdminPaginationControls = ({
   useCustomStyles = false,
   customClass = "",
 }) => {
-  const { isFeatureEnabled, containerClass, isAnyFeatureEnabled } = useAdminComponentUtils(
+  const { isFeatureEnabled, isAnyFeatureEnabled, containerClass } = useAdminComponentUtils(
     enabledFeatures,
     useCustomStyles,
     customClass,
     styles.container,
   );
-  
+
   if (!isAnyFeatureEnabled) return null;
 
   return (

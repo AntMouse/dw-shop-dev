@@ -37,8 +37,8 @@ const naturalSort = (a, b) => {
  * @param {string} [direction="asc"] - 정렬 방향 ("asc" 또는 "desc")
  * @returns {Array} - 정렬된 배열
  */
-export const getSortedItems = (items, criteria, direction = "asc") => {
-  if (!Array.isArray(items) || items.length === 0) return items;
+export const sortByCriteriaAndDirection = (items, criteria, direction = "asc") => {
+  if (!Array.isArray(items) || items.length === 0) return [];
   if (!criteria) return items;
 
   const sortedItems = [...items];
@@ -47,6 +47,11 @@ export const getSortedItems = (items, criteria, direction = "asc") => {
   sortedItems.sort((a, b) => {
     const valueA = a?.[criteria];
     const valueB = b?.[criteria];
+
+    // ✅ 숫자인 경우
+    if (typeof valueA === "number" && typeof valueB === "number") {
+      return (valueA - valueB) * sortDirectionMultiplier;
+    }
 
     // ✅ 날짜 문자열 처리 (YYYY-MM-DD, MM/DD/YYYY 등의 형식)
     if (Date.parse(valueA) && Date.parse(valueB)) {
@@ -62,25 +67,4 @@ export const getSortedItems = (items, criteria, direction = "asc") => {
   });
 
   return sortedItems;
-};
-
-/**
- * ✅ 필터링 후 정렬된 목록 반환
- * @param {Array} items - 필터링 및 정렬할 객체 배열
- * @param {Function|null} filterCriteria - 필터링 기준 함수 (콜백)
- * @param {string} sortCriteria - 정렬 기준이 되는 키
- * @param {string} sortDirection - 정렬 방향 ("asc" 또는 "desc")
- * @returns {Array} - 필터링 및 정렬된 배열
- */
-export const getFilteredAndSortedItems = (items, filterCriteria, sortCriteria, sortDirection) => {
-  let filteredItems = items;
-
-  // ✅ filterCriteria가 함수인지 확인 후 적용
-  if (typeof filterCriteria === "function") {
-    filteredItems = items.filter(filterCriteria);
-  }
-
-  const sortedResult = getSortedItems(filteredItems, sortCriteria, sortDirection);
-  
-  return sortedResult;
 };

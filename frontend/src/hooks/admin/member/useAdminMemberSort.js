@@ -12,5 +12,8 @@ export const useAdminMemberSort = (members) => {
     memberSortDirection: result.sortDirection, 
     handleMemberSortDirectionChange: result.handleSortDirectionChange, 
     sortedMembers: result.sortedItems,
+    sortedMembersTrigger: result.sortedItemsTrigger,
+    getSortedMembers: result.getSortedItems,
+    executeMemberSort: result.executeSort,
   };
 };

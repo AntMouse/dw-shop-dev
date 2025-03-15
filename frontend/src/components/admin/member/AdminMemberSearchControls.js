@@ -13,11 +13,12 @@ const AdminMemberSearchControls = ({
   handleMemberSearchFieldChange, 
   memberSelectedSearchPeriod, 
   handleMemberSearchPeriodChange, 
-  memberSearchFilters, 
-  handleMemberSearchFilterChange, 
-  getMemberSearchResults,
-  handleMemberSearchKeyPress,
+  memberCustomStartDate,
+  handleMemberCustomStartDateChange,
+  memberCustomEndDate,
+  handleMemberCustomEndDateChange,
   handleMemberSearchSubmit,
+  handleMemberSearchKeyPress,
   memberSearchFieldsOptions,
   memberSearchPeriodOptions,
   enabledFeatures,
@@ -32,11 +33,12 @@ const AdminMemberSearchControls = ({
       handleSearchFieldChange={handleMemberSearchFieldChange}
       selectedSearchPeriod={memberSelectedSearchPeriod}
       handleSearchPeriodChange={handleMemberSearchPeriodChange}
-      searchFilters={memberSearchFilters}
-      handleSearchFilterChange={handleMemberSearchFilterChange}
-      getSearchResults={getMemberSearchResults}
-      handleSearchKeyPress={handleMemberSearchKeyPress}
+      customStartDate={memberCustomStartDate}
+      handleCustomStartDateChange={handleMemberCustomStartDateChange}
+      customEndDate={memberCustomEndDate}
+      handleCustomEndDateChange={handleMemberCustomEndDateChange}
       handleSearchSubmit={handleMemberSearchSubmit}
+      handleSearchKeyPress={handleMemberSearchKeyPress}
       searchFieldsOptions={memberSearchFieldsOptions}
       searchPeriodOptions={memberSearchPeriodOptions}
       enabledFeatures={enabledFeatures}

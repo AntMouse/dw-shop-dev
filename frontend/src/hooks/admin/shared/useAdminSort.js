@@ -1,10 +1,11 @@
 // hooks/admin/shared/useAdminSort.js
 
 // 1. React 기본 라이브러리
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 // 4. 사용자가 만든 내부 컴포넌트 & 유틸리티
-import { getFilteredAndSortedItems } from "../../../utils/sort/sortUtils"; // ✅ 유틸 함수 가져오기
+import { sortByCriteriaAndDirection } from "../../../utils/sort/sortUtils"; 
+import { updateStateWithJson } from "../../../utils/state/stateUtils";
 
 /**
  * ✅ 공통 정렬 훅
@@ -16,11 +17,7 @@ export const useAdminSort = (items = [], defaultCriteria = "id", defaultDirectio
   const [sortCriteria, setSortCriteria] = useState(defaultCriteria);
   const [sortDirection, setSortDirection] = useState(defaultDirection);
   const [sortedItems, setSortedItems] = useState([]);
-
-  const getSortedItems = (data, filterCriteria = null) => {
-    if (!Array.isArray(data) || data.length === 0) return [];
-    return getFilteredAndSortedItems(data, filterCriteria, sortCriteria, sortDirection);
-  };
+  const [sortedItemsTrigger, setSortedItemsTrigger] = useState(false); // ✅ 트리거 추가
 
   // ✅ 정렬 기준 변경 함수
   const handleSortCriteriaChange = (newCriteria) => {
@@ -33,12 +30,17 @@ export const useAdminSort = (items = [], defaultCriteria = "id", defaultDirectio
     console.log("정렬 방향 변경 함수 실행 : " + newDirection);
   };
 
-  useEffect(() => {
-    if (JSON.stringify(items) === JSON.stringify(sortedItems)) return;
+  // ✅ 정렬된 데이터 가져오기
+  const getSortedItems = () => {
+    return sortByCriteriaAndDirection(items, sortCriteria, sortDirection);
+  };
 
-    setSortedItems(items?.length ? getSortedItems(items) : []); 
-    console.log("정렬 관련 useEffect 실행 : " + sortDirection);
-  }, [sortCriteria, sortDirection, items]); 
+  // ✅ 정렬 실행 함수 (트리거 반영)
+  const executeSort = () => {
+    setSortedItems(prevSortedItems => 
+      updateStateWithJson(prevSortedItems, getSortedItems(), setSortedItemsTrigger)
+    );
+  };
 
   return {
     sortCriteria,
@@ -46,6 +48,8 @@ export const useAdminSort = (items = [], defaultCriteria = "id", defaultDirectio
     sortDirection,
     handleSortDirectionChange,
     sortedItems,
+    sortedItemsTrigger,
     getSortedItems,
+    executeSort,
   };
 };

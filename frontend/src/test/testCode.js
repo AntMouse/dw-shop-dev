@@ -14,7 +14,6 @@ import {
   updateCurrentPageAndGroupOnNavigation,
   updateCurrentPage,
 } from "../../../utils/pagination/paginationUtils";
-import { updateStateSimple, updateStateWithJson } from "../../../utils/state/stateUtils";
 
 /**
  * ✅ 공용 관리자 페이지네이션 훅
@@ -24,26 +23,13 @@ import { updateStateSimple, updateStateWithJson } from "../../../utils/state/sta
  */
 export const useAdminPagination = (items = [], perPageOptions = [5, 10, 20, 50], maxPageButtons = 10) => {
   const defaultItemsPerPage = perPageOptions[0];
-
-  // 전체 페이지
   const [totalPages, setTotalPages] = useState(1);
-  const [totalPagesTrigger, setTotalPagesTrigger] = useState(false);
-  // 현재 페이지
-  const [currentPage, setCurrentPage] = useState(1);
-  const [currentPageTrigger, setCurrentPageTrigger] = useState(false);
-  // 전체 페이지 그룹
+  const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
   const [totalPageGroups, setTotalPageGroups] = useState(1);
-  const [totalPageGroupsTrigger, setTotalPageGroupsTrigger] = useState(false);
-  // 1~10, 11~20 등의 현재 페이지가 속한 페이지 그룹
-  const [currentPageGroup, setCurrentPageGroup] = useState(1); 
-  const [currentPageGroupTrigger, setCurrentPageGroupTrigger] = useState(false);
-  // 현재 페이지 그룹의 시작 페이지/끝 페이지
-  const [paginationRange, setPaginationRange] = useState({ startPage: 1, endPage: 1 });
-  const [paginationRangeTrigger, setPaginationRangeTrigger] = useState(false);
-
+  const [currentPageGroup, setCurrentPageGroup] = useState(1); // 1~10, 11~20 등의 페이지 그룹
+  const [startPage, setStartPage] = useState(1); // 현재 페이지 그룹의 시작 페이지
+  const [endPage, setEndPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(defaultItemsPerPage); // 한 페이지에 표시할 아이템 수
-
-
 
   // ✅ 현재 페이지에 해당하는 데이터 추출
   const itemsInCurrentPage = getCurrentPageItems(items, currentPage, itemsPerPage);
@@ -51,34 +37,30 @@ export const useAdminPagination = (items = [], perPageOptions = [5, 10, 20, 50],
   // ✅ 전체 페이지 업데이트 함수
   const updateTotalPages = () => {
     const newTotalPages = getTotalPagesCount(items.length, itemsPerPage);
-    setTotalPages(prevTotalPages =>
-      updateStateSimple(prevTotalPages, newTotalPages, setTotalPagesTrigger)
-    );
-  };  
+    setTotalPages(newTotalPages);
+    return newTotalPages;
+  };
 
   // ✅ 전체 페이지 그룹 업데이트 함수
-  const updateTotalPageGroups = () => {
-    const newTotalPageGroups = getTotalPageGroups(totalPages, maxPageButtons);
-    setTotalPageGroups(prevTotalPageGroups =>
-      updateStateSimple(prevTotalPageGroups, newTotalPageGroups, setTotalPageGroupsTrigger)
-    );
-  };  
+  const updateTotalPageGroups = (newTotalPages = totalPages) => {
+    const newTotalPageGroups = getTotalPageGroups(newTotalPages, maxPageButtons);
+    setTotalPageGroups(newTotalPageGroups);
+  };
 
   // ✅ 현재 페이지가 속한 페이지 그룹 업데이트
-  const updateCurrentPageGroup = () => {
-    const newCurrentPageGroup = getCurrentPageGroup(currentPage, maxPageButtons);
-    setCurrentPageGroup(prevCurrentPageGroup =>
-      updateStateSimple(prevCurrentPageGroup, newCurrentPageGroup, setCurrentPageGroupTrigger)
-    );
-  };  
+  const updateCurrentPageGroup = (newCurrentPage = currentPage) => {
+    const newCurrentPageGroup = getCurrentPageGroup(newCurrentPage, maxPageButtons);
+    setCurrentPageGroup(newCurrentPageGroup);
+    return newCurrentPageGroup;
+  };
 
-  // 시작 페이지&끝 페이지 업데이트 함수
-  const updateStartAndEndPages = () => {
-    const newPaginationRange = getPaginationRange(currentPageGroup, totalPages, maxPageButtons);
-  
-    setPaginationRange(prevPaginationRange =>
-      updateStateWithJson(prevPaginationRange, newPaginationRange, setPaginationRangeTrigger)
-    );
+  // ✅ 시작 페이지 및 끝 페이지 업데이트 함수
+  const updateStartAndEndPages = (newCurrentPageGroup = currentPageGroup, newTotalPages = totalPages) => {
+    const { startPage: newStartPage, endPage: newEndPage } = 
+    getPaginationRange(newCurrentPageGroup, newTotalPages, maxPageButtons);
+
+    setStartPage(newStartPage);
+    setEndPage(newEndPage);
   };
 
   // ✅ 페이지당 아이템 개수 변경 핸들러
@@ -102,18 +84,23 @@ export const useAdminPagination = (items = [], perPageOptions = [5, 10, 20, 50],
       return newPage;
     });
   };
+
+  const updatePagination = () => {
+    const newTotalPages = updateTotalPages();
+    updateTotalPageGroups(newTotalPages);
+    const newCurrentPageGroup = updateCurrentPageGroup(1);
+    updateStartAndEndPages(newCurrentPageGroup, newTotalPages);
+  };
   
   return {
     totalPages,
-    totalPagesTrigger,
     currentPage,
     setCurrentPage,
-    currentPageTrigger,
     totalPageGroups,
-    totalPageGroupsTrigger,
     currentPageGroup,
     setCurrentPageGroup,
-    currentPageGroupTrigger,
+    startPage,
+    endPage,
     itemsPerPage,
     setItemsPerPage,
     itemsInCurrentPage,

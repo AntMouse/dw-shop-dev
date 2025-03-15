@@ -8,6 +8,7 @@ export const memberSearchPeriodOptions = [
   { value: "1개월", label: "최근 1개월" },
   { value: "6개월", label: "최근 6개월" },
   { value: "1년", label: "최근 1년" },
+  { value: "직접 입력", label: "직접 입력" },
 ];
 
 // ✅ 회원 필드 옵션 (검색 & 정렬에서 공통으로 사용)
@@ -20,6 +21,12 @@ export const memberFieldOptions = [
   { value: "memberType", label: "회원 타입" },
   { value: "contact", label: "전화번호" },
 ];
+
+export const getAllMemberSearchFields = () => {
+  return memberFieldOptions
+    .filter(field => field.value !== "all")
+    .map(field => field.value);
+};
 
 // ✅ 검색 필드만 포함
 export const memberSearchFieldsOptions = memberFieldOptions.filter(field =>

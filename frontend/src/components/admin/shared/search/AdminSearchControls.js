@@ -16,18 +16,19 @@ const AdminSearchControls = ({
   handleSearchFieldChange,
   selectedSearchPeriod,
   handleSearchPeriodChange,
-  searchFilters,
-  handleSearchFilterChange,
-  getSearchResults,
-  handleSearchKeyPress,
+  customStartDate,
+  handleCustomStartDateChange,
+  customEndDate,
+  handleCustomEndDateChange,
   handleSearchSubmit,
+  handleSearchKeyPress,
   searchFieldsOptions,
   searchPeriodOptions,
   enabledFeatures = [],
   useCustomStyles = false,
   customClass = "",
 }) => {
-  const { isFeatureEnabled, containerClass, isAnyFeatureEnabled } = useAdminComponentUtils(
+  const { isFeatureEnabled, isAnyFeatureEnabled, containerClass } = useAdminComponentUtils(
     enabledFeatures,
     useCustomStyles,
     customClass,
@@ -63,12 +64,8 @@ const AdminSearchControls = ({
             onKeyDown={handleSearchKeyPress}
             placeholder="검색어 입력" 
           />
+          <button onClick={handleSearchSubmit} className={styles.searchButton}>검색</button>
         </>
-      )}
-
-      {/* ✅ 검색 버튼 추가 */}
-      {isFeatureEnabled("searchButton") && (
-        <button onClick={handleSearchSubmit} className={styles.searchButton}>검색</button>
       )}
 
       {/* ✅ 기간 필터 */}
@@ -82,23 +79,17 @@ const AdminSearchControls = ({
               </option>
             ))}
           </select>
-        </>
-      )}
 
-      {/* ✅ 속성 필터 */}
-      {isFeatureEnabled("searchFilters") && (
-        <div className={styles.filterContainer}>
-          {Object.entries(searchFilters).map(([key, value]) => (
-            <div key={key} className={styles.filterItem}>
-              <label>{key}:</label>
-              <select value={value} onChange={(e) => handleSearchFilterChange(key, e.target.value)}>
-                <option value="">전체</option>
-                <option value="male">남성</option>
-                <option value="female">여성</option>
-              </select>
+          {/* 🔥 "직접 입력"을 선택한 경우 날짜 입력 필드 표시 */}
+          {selectedSearchPeriod === "직접 입력" && (
+            <div className={styles.customDateContainer}>
+              <label>시작 날짜:</label>
+              <input type="date" value={customStartDate} onChange={handleCustomStartDateChange} />
+              <label>종료 날짜:</label>
+              <input type="date" value={customEndDate} onChange={handleCustomEndDateChange} />
             </div>
-          ))}
-        </div>
+          )}
+        </>
       )}
     </div>
   );

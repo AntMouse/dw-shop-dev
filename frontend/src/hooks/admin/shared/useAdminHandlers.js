@@ -1,6 +1,10 @@
 // hooks/admin/shared/useAdminHandlers.js
 
+// 1. React 기본 라이브러리
 import { useState } from "react";
+
+// 4. 사용자가 만든 내부 컴포넌트 & 유틸리티
+import { updateStateWithJson } from "../../../utils/state/stateUtils";
 
 export const useAdminHandlers = (
   fetchItemListFunc, 
@@ -11,7 +15,8 @@ export const useAdminHandlers = (
 ) => {
   const [editItemId, setEditItemId] = useState(null);
   const [editItemData, setEditItemData] = useState(null);
-  const [items, setItems] = useState([]); // ✅ 공통 데이터 리스트 상태
+  const [items, setItems] = useState([]);
+  const [itemsTrigger, setItemsTrigger] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -25,8 +30,8 @@ export const useAdminHandlers = (
         setItems([]);
         return;
       }
+      setItems(prevItems => updateStateWithJson(prevItems, data, setItemsTrigger));
 
-      setItems(data);
     } catch (error) {
       setError(`데이터를 불러오는 중 오류 발생: ${error.message}`);
       if (onError) onError(error.message);
@@ -106,6 +111,7 @@ export const useAdminHandlers = (
     editItemData,
     items,
     setItems,
+    itemsTrigger,
     isLoading,
     error,
     fetchItemList,

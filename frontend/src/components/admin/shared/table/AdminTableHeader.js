@@ -4,8 +4,8 @@
 import React from "react";
 
 // 4. 사용자가 만든 내부 컴포넌트 & 유틸리티
-import { useCommonStyles } from "../../../common/hooks/useCommonStyles";
-import { useFeatureToggle } from "../../../common/hooks/useFeatureToggle";
+import { useCommonStyles } from "../../../../hooks/common/useCommonStyles";
+import { useFeatureToggle } from "../../../../hooks/common/useFeatureToggle";
 
 // 5. CSS 또는 스타일 파일
 import styles from "./AdminTableHeader.module.css";

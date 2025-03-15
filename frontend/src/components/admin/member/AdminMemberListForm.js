@@ -36,11 +36,12 @@ const AdminMemberListForm = ({
   handleMemberSearchFieldChange, 
   memberSelectedSearchPeriod, 
   handleMemberSearchPeriodChange, 
-  memberSearchFilters, 
-  handleMemberSearchFilterChange, 
-  getMemberSearchResults,
-  handleMemberSearchKeyPress,
+  memberCustomStartDate,
+  handleMemberCustomStartDateChange,
+  memberCustomEndDate,
+  handleMemberCustomEndDateChange,
   handleMemberSearchSubmit,  
+  handleMemberSearchKeyPress,
 
   // 2-3. 정렬 데이터
   memberSortCriteria,
@@ -57,7 +58,7 @@ const AdminMemberListForm = ({
   memberStartPage,
   memberEndPage,
   memberPerPageOptions,
-  currentMembers,
+  currentPageMembers,
 
   // 3. 기능 및 CSS 사용 여부
   enabledFeatures = [],
@@ -84,7 +85,7 @@ const AdminMemberListForm = ({
           handleMemberCancelEdit={handleMemberCancelEdit}
           memberTableColumns={memberTableColumns}
           memberFields={memberFields}
-          currentMembers={currentMembers}
+          currentMembers={currentPageMembers}
           enabledFeatures={["tableHeader", "tableBody", "tableRow", "tableActions"]}
           useCustomStyles={useCustomStyles}
           customClass={customClass}
@@ -99,14 +100,15 @@ const AdminMemberListForm = ({
           handleMemberSearchFieldChange={handleMemberSearchFieldChange}
           memberSelectedSearchPeriod={memberSelectedSearchPeriod}
           handleMemberSearchPeriodChange={handleMemberSearchPeriodChange}
-          memberSearchFilters={memberSearchFilters}
-          handleMemberSearchFilterChange={handleMemberSearchFilterChange}
-          getMemberSearchResults={getMemberSearchResults}
-          handleMemberSearchKeyPress={handleMemberSearchKeyPress}
+          memberCustomStartDate={memberCustomStartDate}
+          handleMemberCustomStartDateChange={handleMemberCustomStartDateChange}
+          memberCustomEndDate={memberCustomEndDate}
+          handleMemberCustomEndDateChange={handleMemberCustomEndDateChange}
           handleMemberSearchSubmit={handleMemberSearchSubmit}
+          handleMemberSearchKeyPress={handleMemberSearchKeyPress}
           memberSearchFieldsOptions={memberSearchFieldsOptions}
           memberSearchPeriodOptions={memberSearchPeriodOptions}
-          enabledFeatures={["searchFieldSelector", "searchInput", "searchButton", "searchPeriodSelector", "searchFilters"]}
+          enabledFeatures={["searchFieldSelector", "searchInput", "searchPeriodSelector"]}
           useCustomStyles={useCustomStyles}
           customClass={customClass}
         />
