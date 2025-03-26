@@ -1,0 +1,28 @@
+@MappedSuperclass
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public abstract class BaseTimeEntity {
+
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime createdAt; // 생성일
+
+    @UpdateTimestamp
+    private LocalDateTime updatedAt; // 수정일
+}
+
+@MappedSuperclass
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public abstract class BaseDeletableEntity extends BaseTimeEntity {
+
+    private LocalDateTime deletedAt; // 삭제일 (소프트 삭제 지원)
+
+    public void delete() {
+        this.deletedAt = LocalDateTime.now(); // 소프트 삭제 적용
+    }
+
+    public boolean isDeleted() {
+        return deletedAt != null;
+    }
+}

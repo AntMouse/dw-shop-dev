@@ -5,6 +5,7 @@ import com.example.dw.shop.option.dto.OptionGroupListDto;
 import com.example.dw.shop.option.dto.OptionGroupRequestDto;
 import com.example.dw.shop.option.dto.OptionGroupResponseDto;
 import com.example.dw.shop.option.dto.OptionGroupUpdateDto;
+import com.example.dw.shop.option.entity.OptionGroup;
 import com.example.dw.shop.option.service.OptionGroupService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.GetMapping;
 
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j // ✅ Slf4j 로깅 추가
@@ -40,6 +42,7 @@ public class OptionGroupController {
         return ResponseEntity.ok(ApiResponse.success(createdOptionGroup, "옵션 그룹이 생성되었습니다."));
     }
 
+    /*
     // ✅ 모든 옵션 그룹 목록 조회
     @GetMapping
     public ResponseEntity<ApiResponse<Page<OptionGroupListDto>>> getAllOptionGroups(
@@ -49,6 +52,16 @@ public class OptionGroupController {
         log.info("옵션 그룹 목록 조회 API 호출");
         Page<OptionGroupListDto> optionGroups = optionGroupService.getAllOptionGroups(search, pageable);
         return ResponseEntity.ok(ApiResponse.success(optionGroups, "옵션 그룹 목록 조회 성공"));
+    }
+    */
+
+    @GetMapping
+    public ResponseEntity<Page<OptionGroup>> getPagedOptionGroups(
+            @RequestParam(required = false) LocalDateTime lastCreatedAt,
+            @RequestParam(defaultValue = "10000") int limit) {
+
+        Page<OptionGroup> optionGroups = optionGroupService.getPagedOptionGroups(lastCreatedAt, limit);
+        return ResponseEntity.ok(optionGroups);
     }
 
     // ✅ 특정 옵션 그룹 조회

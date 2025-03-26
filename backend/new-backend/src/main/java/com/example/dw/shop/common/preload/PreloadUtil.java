@@ -1,7 +1,5 @@
 package com.example.dw.shop.common.preload;
 
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 /**
@@ -12,7 +10,7 @@ import org.springframework.data.domain.Sort;
  */
 public class PreloadUtil {
 
-    private static final int DEFAULT_LIMIT = 10000; // 기본 로딩 개수
+    private static final int DEFAULT_LIMIT = 10000; // ✅ 기본 로딩 개수 유지
     private static final String DEFAULT_SORT_FIELD = "createdAt"; // 기본 정렬 필드
 
     // ✅ 객체 생성을 방지하기 위한 private 생성자
@@ -21,51 +19,37 @@ public class PreloadUtil {
     }
 
     /**
-     * ✅ Keyset 방식: 마지막 ID 기반으로 다음 데이터 로드
-     * @param limit 가져올 데이터 개수
-     * @param lastValue 마지막으로 가져온 데이터의 정렬 필드 값 (예: createdAt)
-     * @param sortBy 정렬 기준 필드
-     * @param direction 정렬 방향 (ASC / DESC)
+     * ✅ Keyset 방식: 정렬 정보만 반환 (실제 WHERE 조건은 Repository에서 적용)
      */
-    public static Pageable getNextPreload(int limit, Comparable<?> lastValue, String sortBy, Sort.Direction direction) {
-        if (lastValue == null) {
-            // 첫 번째 페이지일 경우 기본 프리로드 사용
-            return PageRequest.of(0, limit, Sort.by(direction, sortBy));
-        }
-        return PageRequest.of(0, limit, Sort.by(direction, sortBy));
-        // 🚨 실제 Keyset 방식 적용 시, Repository에서 WHERE 조건을 추가해야 함.
+    public static Sort getSort(String sortBy, Sort.Direction direction) {
+        return Sort.by(direction, sortBy);
     }
 
     /**
-     * ✅ 기본 정렬 필드(createdAt) 기준 최신 데이터 일부 로드
+     * ✅ 기본 정렬 필드(createdAt) 기준 최신 데이터 정렬
      */
-    public static Pageable getLatestDataPreload(int limit) {
-        return getNextPreload(limit, null, DEFAULT_SORT_FIELD, Sort.Direction.DESC);
-    }
-
-    public static Pageable getLatestDataPreload() {
-        return getLatestDataPreload(DEFAULT_LIMIT);
+    public static Sort getLatestSort() {
+        return getSort(DEFAULT_SORT_FIELD, Sort.Direction.DESC);
     }
 
     /**
-     * ✅ 기본 정렬 필드(createdAt) 기준 오래된 데이터 일부 로드
+     * ✅ 기본 정렬 필드(createdAt) 기준 오래된 데이터 정렬
      */
-    public static Pageable getOldestDataPreload(int limit) {
-        return getNextPreload(limit, null, DEFAULT_SORT_FIELD, Sort.Direction.ASC);
-    }
-
-    public static Pageable getOldestDataPreload() {
-        return getOldestDataPreload(DEFAULT_LIMIT);
+    public static Sort getOldestSort() {
+        return getSort(DEFAULT_SORT_FIELD, Sort.Direction.ASC);
     }
 
     /**
-     * ✅ 업데이트 기준 최신 데이터 일부 로드
+     * ✅ 업데이트 기준 최신 데이터 정렬
      */
-    public static Pageable getUpdatedDataPreload(int limit) {
-        return getNextPreload(limit, null, "updatedAt", Sort.Direction.DESC);
+    public static Sort getUpdatedSort() {
+        return getSort("updatedAt", Sort.Direction.DESC);
     }
 
-    public static Pageable getUpdatedDataPreload() {
-        return getUpdatedDataPreload(DEFAULT_LIMIT);
+    /**
+     * ✅ 기본 limit 값 제공 (limit 값이 없을 경우)
+     */
+    public static int getDefaultLimit() {
+        return DEFAULT_LIMIT;
     }
 }

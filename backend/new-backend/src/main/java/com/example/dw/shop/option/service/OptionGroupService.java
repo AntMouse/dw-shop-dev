@@ -1,5 +1,6 @@
 package com.example.dw.shop.option.service;
 
+import com.example.dw.shop.common.preload.PreloadUtil;
 import com.example.dw.shop.global.exception.customexception.DuplicateEntryException;
 import com.example.dw.shop.global.exception.customexception.EntityNotFoundException;
 import com.example.dw.shop.global.exception.errorcode.OptionGroupErrorCode;
@@ -19,6 +20,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -60,9 +62,7 @@ public class OptionGroupService {
         return optionGroupMapper.toResponseDto(savedOptionGroup);
     }
 
-    /**
-     * ✅ 옵션 그룹 전체 목록 조회
-     */
+    /*
     @Transactional(readOnly = true)
     public Page<OptionGroupListDto> getAllOptionGroups(String search, Pageable pageable, Sort sort) {
         log.info("옵션 그룹 목록 조회 요청: search={}, pageable={}, sort={}", search, pageable, sort);
@@ -76,6 +76,20 @@ public class OptionGroupService {
 
         return optionGroupRepository.findAll(sortedPageable)
                 .map(optionGroupMapper::toListDto);
+    }
+    */
+
+    @Transactional(readOnly = true)
+    public Page<OptionGroup> getPagedOptionGroups(LocalDateTime lastCreatedAt, int limit) {
+        Pageable pageable = PageRequest.of(0, limit, PreloadUtil.getLatestSort());
+
+        if (lastCreatedAt == null) {
+            // 처음 로드할 경우 최신 데이터 10,000개 가져옴
+            return optionGroupRepository.findAllByOrderByCreatedAtDesc(pageable);
+        }
+
+        // Keyset 기반 다음 데이터 로드
+        return optionGroupRepository.findByCreatedAtLessThanOrderByCreatedAtDesc(lastCreatedAt, pageable);
     }
 
     /**

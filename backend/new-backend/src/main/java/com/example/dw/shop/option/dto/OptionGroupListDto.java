@@ -1,6 +1,5 @@
 package com.example.dw.shop.option.dto;
 
-import com.example.dw.shop.option.entity.OptionGroup;
 import lombok.Getter;
 
 @Getter
