@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum CommonErrorCode implements BaseErrorCode {
     VALIDATION_ERROR(400, "입력 값이 유효하지 않습니다."),
+    INVALID_STATUS_TRANSITION(400, "잘못된 상태 전이입니다."),
     UNAUTHORIZED(401, "인증이 필요합니다."),
     FORBIDDEN(403, "권한이 없습니다."),
     INTERNAL_SERVER_ERROR(500, "서버 내부 오류입니다.");
