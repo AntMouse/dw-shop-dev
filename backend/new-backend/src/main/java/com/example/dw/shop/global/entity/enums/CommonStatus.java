@@ -11,8 +11,8 @@ public enum CommonStatus {
 
     // 어떤 걸로 바꿀지 가능 여부 결정
     static {
-        ACTIVE.allowedTransitions = EnumSet.of(INACTIVE);
-        INACTIVE.allowedTransitions = EnumSet.of(ACTIVE);
+        ACTIVE.allowedTransitions = EnumSet.of(INACTIVE, DELETED);
+        INACTIVE.allowedTransitions = EnumSet.of(ACTIVE, DELETED);
         DELETED.allowedTransitions = EnumSet.noneOf(CommonStatus.class);
     }
 

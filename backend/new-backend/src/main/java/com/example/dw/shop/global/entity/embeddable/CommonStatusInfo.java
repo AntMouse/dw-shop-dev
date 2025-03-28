@@ -28,17 +28,25 @@ public class CommonStatusInfo {
     }
 
     // 공용 상태 값 바꾸는 메서드
-    public void changeStatus(CommonStatus next) {
-        if (!commonStatus.canTransitionTo(next)) {
-            throw new ValidationException(CommonErrorCode.INVALID_STATUS_TRANSITION,
-                    "현재 상태(" + commonStatus + ")에서는 " + next + "로 전이할 수 없습니다.");
+    public void changeStatus(boolean overrideRule, CommonStatus next) {
+        if (!overrideRule && !commonStatus.canTransitionTo(next)) {
+            throw new ValidationException(
+                    CommonErrorCode.INVALID_STATUS_TRANSITION,
+                    "현재 상태(" + commonStatus + ")에서는 " + next + "로 전이할 수 없습니다."
+            );
         }
+
         this.commonStatus = next;
     }
 
-    // 삭제 처리(예외)
-    public void delete() {
-        this.commonStatus = CommonStatus.DELETED;
+    // 일반적인 상태 전이만 허용
+    public void changeStatusSafely(CommonStatus next) {
+        changeStatus(false, next);
+    }
+
+    // 강제 상태 전이
+    public void changeStatusForcefully(CommonStatus next) {
+        changeStatus(true, next);
     }
 
     // 상태 체크
