@@ -1,7 +1,7 @@
 package com.example.dw.shop.option.entity;
 
-import com.example.dw.shop.global.entity.BaseEntity;
-import com.example.dw.shop.global.entity.embeddable.DeletableInfo;
+import com.example.dw.shop.global.lifecycle.entity.BaseEntity;
+import com.example.dw.shop.global.lifecycle.deletion.DeletableInfo;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;

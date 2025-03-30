@@ -1,4 +1,4 @@
-package com.example.dw.shop.global.entity;
+package com.example.dw.shop.global.lifecycle.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;

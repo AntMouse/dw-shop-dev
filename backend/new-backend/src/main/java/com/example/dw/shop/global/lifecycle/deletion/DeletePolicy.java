@@ -1,4 +1,4 @@
-package com.example.dw.shop.global.entity.domainlogic.status;
+package com.example.dw.shop.global.lifecycle.deletion;
 
 public enum DeletePolicy {
     FORCE,  // 상태 전이 정책을 무시하고 삭제

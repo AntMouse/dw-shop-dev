@@ -1,8 +1,7 @@
-package com.example.dw.shop.global.entity.embeddable;
+package com.example.dw.shop.global.lifecycle.status;
 
 import com.example.dw.shop.global.exception.customexception.ValidationException;
 import com.example.dw.shop.global.exception.errorcode.CommonErrorCode;
-import com.example.dw.shop.global.entity.enums.CommonStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;
@@ -24,18 +23,17 @@ public class CommonStatusInfo {
 
     // 현재 상태에서 갈 수 있는 모든 상태를 알려주는 메서드
     public EnumSet<CommonStatus> getAvailableNextStatuses() {
-        return commonStatus.getAllowedTransitions();
+        return CommonStatusTransitionConfig.getAllowedTransitions(commonStatus);
     }
 
     // 공용 상태 값 바꾸는 메서드
     public void changeStatus(boolean overrideRule, CommonStatus next) {
-        if (!overrideRule && !commonStatus.canTransitionTo(next)) {
+        if (!overrideRule && !CommonStatusTransitionConfig.canTransition(commonStatus, next)) {
             throw new ValidationException(
                     CommonErrorCode.INVALID_STATUS_TRANSITION,
                     "현재 상태(" + commonStatus + ")에서는 " + next + "로 전이할 수 없습니다."
             );
         }
-
         this.commonStatus = next;
     }
 
@@ -50,16 +48,20 @@ public class CommonStatusInfo {
     }
 
     // 상태 체크
+    public boolean is(CommonStatus status) {
+        return CommonStatusTransitionConfig.is(this.commonStatus, status);
+    }
+
     public boolean isActive() {
-        return commonStatus.is(CommonStatus.ACTIVE);
+        return is(CommonStatus.ACTIVE);
     }
 
     public boolean isInactive() {
-        return commonStatus.is(CommonStatus.INACTIVE);
+        return is(CommonStatus.INACTIVE);
     }
 
     public boolean isDeleted() {
-        return commonStatus.is(CommonStatus.DELETED);
+        return is(CommonStatus.DELETED);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.example.dw.shop.global.entity.embeddable;
+package com.example.dw.shop.global.lifecycle.deletion;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
