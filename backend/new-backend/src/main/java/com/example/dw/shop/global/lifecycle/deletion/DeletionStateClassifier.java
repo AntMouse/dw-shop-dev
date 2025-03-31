@@ -1,7 +1,6 @@
 package com.example.dw.shop.global.lifecycle.deletion;
 
 import java.util.EnumSet;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class DeletionStateClassifier {
@@ -21,46 +20,28 @@ public class DeletionStateClassifier {
                 .collect(Collectors.joining("_"));
     }
 
-    // 각 상태를 설명하는 string 리턴
-    public static String describe(EnumSet<DeletionComponent> components) {
-        if (components == null || components.isEmpty()) return "삭제되지 않음";
+    /**
+     * 삭제 상태에 대한 설명을 delimiter 기준으로 구분하여 문자열 반환
+     * @param components 삭제 관련 컴포넌트
+     * @param delimiter 구분자 (예: ", ", "\n", " | " 등)
+     * @return 설명 문자열 (e.g., "상태 필드가 삭제되었습니다, 삭제 정보 필드가 존재합니다")
+     */
+    public static String describe(EnumSet<DeletionComponent> components, String delimiter) {
+        if (components == null || components.isEmpty()) {
+            return "삭제되지 않았습니다";
+        }
 
         return components.stream()
                 .map(component -> switch (component) {
-                    case STATUS -> "상태 필드가 삭제됨";
-                    case DELETABLE -> "삭제 정보 필드가 존재함";
+                    case STATUS -> "상태 필드가 삭제되었습니다";
+                    case DELETABLE -> "삭제 정보 필드가 존재합니다";
                 })
-                .collect(Collectors.joining(", "));
-    }
-
-    // 특정 삭제 컴포넌트가 포함되어 있는지 확인
-    public static boolean contains(Set<DeletionComponent> components, DeletionComponent target) {
-        return components != null && components.contains(target);
+                .collect(Collectors.joining(delimiter));
     }
 
     // 완전 삭제 상태인지 확인 (모든 컴포넌트가 다 포함되어 있는 경우)
     // 삭제 상태이고, 삭제 시간, 삭제한 사람 등의 정보가 다 있는 삭제 정보가 다 있으면 true
     public static boolean isFullyDeleted(EnumSet<DeletionComponent> components) {
-        return components.containsAll(EnumSet.allOf(DeletionComponent.class));
-    }
-
-    // 둘 다 삭제 안 됐을 경우 true 반환
-    public static boolean isNotDeleted(EnumSet<DeletionComponent> components) {
-        return components == null || components.isEmpty();
-    }
-
-    // 단일 컴포넌트만 삭제된 경우 true 리턴
-    public static boolean isSingleDeleted(EnumSet<DeletionComponent> components) {
-        return components.size() == 1;
-    }
-
-    // 두 개 이상 삭제된 경우지만 완전 삭제는 아닌 상태라면 true를 반환
-    public static boolean isPartiallyDeleted(EnumSet<DeletionComponent> components) {
-        return components.size() > 1 && !isFullyDeleted(components);
-    }
-
-    // 삭제된 컴포넌트 수를 반환
-    public static int countDeletedComponents(EnumSet<DeletionComponent> components) {
-        return components != null ? components.size() : 0;
+        return components != null && components.containsAll(EnumSet.allOf(DeletionComponent.class));
     }
 }

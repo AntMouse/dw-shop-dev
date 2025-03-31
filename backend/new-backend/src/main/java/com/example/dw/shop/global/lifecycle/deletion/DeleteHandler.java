@@ -3,7 +3,9 @@ package com.example.dw.shop.global.lifecycle.deletion;
 import com.example.dw.shop.global.lifecycle.status.CommonStatusInfo;
 import com.example.dw.shop.global.lifecycle.status.CommonStatus;
 
+import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.List;
 
 public class DeleteHandler {
 
@@ -38,8 +40,8 @@ public class DeleteHandler {
         softDelete(statusInfo, deletableInfo, deletedBy, DeletePolicy.FORCE);
     }
 
-    // 공통 로직 메서드
-    private static EnumSet<DeletionComponent> extractDeletedComponents(CommonStatusInfo statusInfo, DeletableInfo deletableInfo) {
+    // 삭제된 컴포넌트 EnumSet 반환. 어떤 컴포넌트가 삭제되었는제 데이터(자료구조)를 리턴. 내부 코드 답변 용도.
+    private static EnumSet<DeletionComponent> detectDeletedComponents(CommonStatusInfo statusInfo, DeletableInfo deletableInfo) {
         EnumSet<DeletionComponent> components = EnumSet.noneOf(DeletionComponent.class);
         if (statusInfo != null && statusInfo.isDeleted()) {
             components.add(DeletionComponent.STATUS);
@@ -50,36 +52,51 @@ public class DeleteHandler {
         return components;
     }
 
-    // 삭제 여부만 판단 (true / false)
-    public static boolean isDeleted(CommonStatusInfo statusInfo, DeletableInfo deletableInfo) {
-        return !extractDeletedComponents(statusInfo, deletableInfo).isEmpty();
-    }
-
-    // 삭제된 컴포넌트 EnumSet 반환. 어떤 컴포넌트가 삭제되었는제 데이터(자료구조)를 리턴. 내부 코드 답변 용도.
-    public static EnumSet<DeletionComponent> detectDeletionComponents(CommonStatusInfo statusInfo, DeletableInfo deletableInfo) {
-        return extractDeletedComponents(statusInfo, deletableInfo);
-    }
-
     // 삭제 상태 문자열 분류. 내가 따로 만든 메서드로 삭제 상태를 조합해서 리턴. 사용자에게 보여줄 UI 용도.
     public static String detectDeletionStatus(CommonStatusInfo statusInfo, DeletableInfo deletableInfo) {
-        EnumSet<DeletionComponent> components = detectDeletionComponents(statusInfo, deletableInfo);
+        EnumSet<DeletionComponent> components = detectDeletedComponents(statusInfo, deletableInfo);
         return DeletionStateClassifier.classify(components);
     }
 
+    // 삭제 상태 설명 문자열 반환 ("상태 필드가 삭제되었습니다, 삭제 정보 필드가 존재합니다")
+    public static String describeDeletionStatus(CommonStatusInfo statusInfo, DeletableInfo deletableInfo) {
+        EnumSet<DeletionComponent> components = detectDeletedComponents(statusInfo, deletableInfo);
+        return DeletionStateClassifier.describe(components, "\n");
+    }
+
+    // 삭제 처리가 전부 제대로 되었는지 체크하는 메서드
+    public static boolean isFullyDeleted(CommonStatusInfo statusInfo, DeletableInfo deletableInfo) {
+        EnumSet<DeletionComponent> components = detectDeletedComponents(statusInfo, deletableInfo);
+        return DeletionStateClassifier.isFullyDeleted(components);
+    }
+
+    private static RestoreResultEntry restoreSingle(String field, Boolean isDeleted, Runnable restoreAction) {
+        if (isDeleted == null) {
+            return new RestoreResultEntry(field, RestoreStatus.FAILED);
+        } else if (!isDeleted) {
+            return new RestoreResultEntry(field, RestoreStatus.NOT_DELETED);
+        } else {
+            restoreAction.run();
+            return new RestoreResultEntry(field, RestoreStatus.SUCCESS);
+        }
+    }
+
     // 복원 처리 (삭제 취소)
-    public static boolean restore(CommonStatusInfo statusInfo, DeletableInfo deletableInfo) {
-        boolean restored = false;
+    public static List<RestoreResultEntry> restore(CommonStatusInfo statusInfo, DeletableInfo deletableInfo) {
+        List<RestoreResultEntry> results = new ArrayList<>();
 
-        if (statusInfo != null && statusInfo.isDeleted()) {
-            statusInfo.changeStatusForcefully(CommonStatus.ACTIVE);
-            restored = true;
-        }
+        results.add(restoreSingle(
+                RestoreResultEntry.RESTORE_FIELD_STATUS,
+                statusInfo != null ? statusInfo.isDeleted() : null,
+                () -> { if (statusInfo != null) statusInfo.changeStatusForcefully(CommonStatus.ACTIVE); }
+        ));
 
-        if (deletableInfo != null && deletableInfo.isDeleted()) {
-            deletableInfo.restore();
-            restored = true;
-        }
+        results.add(restoreSingle(
+                RestoreResultEntry.RESTORE_FIELD_DELETABLE,
+                deletableInfo != null ? deletableInfo.isDeleted() : null,
+                () -> { if (deletableInfo != null) deletableInfo.restore(); }
+        ));
 
-        return restored;
+        return results;
     }
 }
